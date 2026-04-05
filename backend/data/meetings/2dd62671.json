@@ -1,0 +1,64 @@
+{
+  "id": "2dd62671",
+  "timestamp": "2026-04-05T14:44:37.573559",
+  "memo": {
+    "title": "Sprint 12 Status",
+    "date": "2025-04-05",
+    "attendees": [
+      "Alice",
+      "John",
+      "Priya"
+    ],
+    "summary": "The team discussed the blocked auth module due to an unfinished API. John committed to fixing the API by April 7, and Priya's designs are ready but awaiting the API. A review meeting was planned for next Monday, and the release date was moved to April 10.",
+    "decisions": [
+      "Release pushed to April 10"
+    ],
+    "blockers": [
+      "Auth module is blocked awaiting API fix"
+    ],
+    "next_steps": [
+      "John will fix the API by April 7",
+      "Alice will schedule a review meeting for next Monday with John and Priya"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Fix the API",
+      "assignee": "John",
+      "due_date": "2025-04-07",
+      "priority": "High",
+      "notes": "The auth module is blocked until this is fixed"
+    },
+    {
+      "id": "t2",
+      "title": "Schedule a review meeting",
+      "assignee": "Alice",
+      "due_date": "TBD",
+      "priority": "Medium",
+      "notes": "Involves John and Priya"
+    },
+    {
+      "id": "t3",
+      "title": "Update the release date to April 10",
+      "assignee": "Unassigned",
+      "due_date": "TBD",
+      "priority": "Low",
+      "notes": "The release is pushed to April 10"
+    }
+  ],
+  "meetings": [
+    {
+      "id": "m1",
+      "title": "API Integration Review",
+      "purpose": "Review the API fix and its integration with Priya's designs",
+      "suggested_date": "2025-04-07",
+      "duration_mins": 30,
+      "recipients": [
+        "John",
+        "Priya"
+      ],
+      "agenda": "Confirm API fix completion; Validate design integration; Identify any remaining issues"
+    }
+  ]
+}
