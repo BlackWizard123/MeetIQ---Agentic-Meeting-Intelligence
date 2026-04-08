@@ -1,0 +1,435 @@
+{
+  "id": "8c8e9eff",
+  "timestamp": "2026-04-06T13:59:47.286870",
+  "memo": {
+    "title": "Plipkary Mid-Sprint Check",
+    "date": "2026-04-08",
+    "attendees": [
+      "hariharan-projectmanager",
+      "Vikram",
+      "Priya",
+      "Arun",
+      "Nithya",
+      "Suresh",
+      "Lakshmi"
+    ],
+    "project": "Plipkary",
+    "summary_points": [
+      "Backend APIs for product listing and cart are complete and deployed; payment API is 80% done.",
+      "Frontend product listing page is live on staging; cart page is 60% complete and now unblocked.",
+      "Payment integration with Razorpay is set up, but webhook handling is pending and due by Thursday.",
+      "A critical bug exists in the checkout flow where the success page fails to load after payment.",
+      "Testing has completed 40 cases for product listing, uncovering 2 bugs, and cart testing is beginning.",
+      "The deadline for all development is April 12th to prepare for the investor demo on April 15th."
+    ],
+    "key_decisions": [
+      "All development work must be completed by April 12th for final testing.",
+      "The checkout page redirect bug must be fixed by April 9th.",
+      "Arun must complete the payment webhook integration by April 10th.",
+      "Priya must complete the cart page by April 10th."
+    ],
+    "blockers": [
+      "Nithya is blocked by a bug in the payment redirect flow on the checkout page.",
+      "Priya was blocked on the cart API response format, but this has been resolved by Vikram."
+    ],
+    "risks": [
+      "The checkout page redirect bug is critical and risks the upcoming investor demo if not fixed promptly.",
+      "The tight deadline of April 12th for all features leaves little room for unexpected delays before the demo."
+    ],
+    "dependencies": [
+      "Arun's webhook completion is dependent on Vikram's code review.",
+      "Suresh is waiting for Vikram to provide updated environment variables for the payment gateway.",
+      "Nithya's bug fix is dependent on help from Priya.",
+      "Lakshmi's cart testing is dependent on Priya completing the cart page."
+    ],
+    "next_steps": [
+      "Vikram to send updated environment variables to Suresh within 30 minutes.",
+      "Vikram to fix the two bugs reported by Lakshmi by tonight (April 8th).",
+      "Vikram to review Arun's webhook code this evening (April 8th).",
+      "Nithya and Priya to debug and fix the checkout redirect bug by tomorrow (April 9th).",
+      "Arun to complete the webhook handling by Thursday (April 10th).",
+      "Priya to complete the cart page by Thursday (April 10th).",
+      "Lakshmi to begin testing the cart functionality today (April 8th)."
+    ],
+    "manager_actions": [
+      "Schedule a final review meeting for April 13th."
+    ],
+    "open_questions": [],
+    "highlights": [
+      "Product listing and cart APIs are complete and deployed to staging.",
+      "The product listing page is live on the staging environment.",
+      "The staging environment is stable with a functional CI/CD pipeline."
+    ],
+    "follow_up_required": true
+  },
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Complete Razorpay Webhook Handling",
+      "description": "Implement and complete the webhook handling for the Razorpay payment integration.",
+      "assignee": "Arun",
+      "assignee_email": "arun.plip@dummyteam.com",
+      "companion": "",
+      "guide": "Vikram",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2026-04-09",
+      "assigned_date": "2026-04-08",
+      "total_days": 1,
+      "priority": "High",
+      "notes": "Vikram helped with the initial setup and will review the final code. This is part of the payment integration.",
+      "escalation_details": "Delay will block payment flow testing and risk the investor demo on April 15th.",
+      "skills_required": [
+        "Node.js",
+        "REST APIs",
+        "Payment Integration"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t2",
+      "title": "Review Arun's Razorpay Webhook Code",
+      "description": "Conduct a code review for Arun's implementation of the Razorpay webhook handling to ensure it's correct and complete.",
+      "assignee": "Vikram",
+      "assignee_email": "vikram.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2026-04-08",
+      "assigned_date": "2026-04-08",
+      "total_days": null,
+      "priority": "High",
+      "notes": "This is a review task to unblock Arun and ensure the quality of the payment integration webhook.",
+      "escalation_details": "If not reviewed, Arun's task might be delayed or contain bugs.",
+      "skills_required": [
+        "Node.js",
+        "REST APIs",
+        "Code Review"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t3",
+      "title": "Complete Frontend Cart Page Development",
+      "description": "Finish the development of the cart page UI and functionality. Was previously blocked on API response format, which is now resolved.",
+      "assignee": "Priya",
+      "assignee_email": "priya.plip@dummyteam.com",
+      "companion": "Nithya",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2026-04-09",
+      "assigned_date": "2026-04-08",
+      "total_days": 1,
+      "priority": "High",
+      "notes": "Blocker on cart API response format has been resolved by Vikram.",
+      "escalation_details": "Cart page is a core feature required for the investor demo. Delay will impact testing.",
+      "skills_required": [
+        "React",
+        "Next.js",
+        "TypeScript"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t4",
+      "title": "Fix Bug in Payment Redirect Flow",
+      "description": "Debug and fix the issue where the success page is not loading after a successful payment redirect in the checkout flow.",
+      "assignee": "Nithya",
+      "assignee_email": "nithya.plip@dummyteam.com",
+      "companion": "",
+      "guide": "Priya",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2026-04-09",
+      "assigned_date": "2026-04-08",
+      "total_days": 1,
+      "priority": "High",
+      "notes": "This bug is critical for the demo. Priya is assisting with the debugging.",
+      "escalation_details": "Failure to fix this will break the E2E demo flow for investors.",
+      "skills_required": [
+        "React",
+        "JavaScript",
+        "Debugging"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t5",
+      "title": "Provide Updated Payment Gateway Environment Variables",
+      "description": "Send the updated environment variables for the payment gateway to Suresh for the staging environment.",
+      "assignee": "Vikram",
+      "assignee_email": "vikram.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2026-04-08",
+      "assigned_date": "2026-04-08",
+      "total_days": null,
+      "priority": "High",
+      "notes": "Needed by Suresh to configure the staging environment. Promised to deliver in 30 minutes.",
+      "escalation_details": "Blocks staging environment setup for the new payment gateway.",
+      "skills_required": [
+        "Backend Configuration",
+        "GCP"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t6",
+      "title": "Fix 2 Bugs Found in Product Listing Page",
+      "description": "Resolve the two bugs reported by Lakshmi during the testing of the product listing page.",
+      "assignee": "Vikram",
+      "assignee_email": "vikram.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2026-04-08",
+      "assigned_date": "2026-04-08",
+      "total_days": null,
+      "priority": "High",
+      "notes": "Bugs were found by Lakshmi during QA testing. Vikram promised a fix by tonight.",
+      "escalation_details": "Blocks further testing of the product listing page and related flows.",
+      "skills_required": [
+        "Node.js",
+        "REST APIs",
+        "Debugging"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t7",
+      "title": "Perform QA Testing for Cart Page",
+      "description": "Begin and complete the E2E and functional testing for the newly developed cart page once it's deployed to staging.",
+      "assignee": "Lakshmi",
+      "assignee_email": "lakshmi.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2026-04-11",
+      "assigned_date": "2026-04-08",
+      "total_days": 3,
+      "priority": "Medium",
+      "notes": "Testing to start today (April 8th). Depends on Priya completing the cart page development.",
+      "escalation_details": "Delay in testing will reduce the buffer time before the investor demo on April 15th.",
+      "skills_required": [
+        "Testing",
+        "Cypress",
+        "E2E Testing"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t8",
+      "title": "Schedule Final Sprint Review Meeting",
+      "description": "Schedule the final review meeting for all team members on April 13th to prepare for the investor demo.",
+      "assignee": "",
+      "assignee_email": "",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2026-04-10",
+      "assigned_date": "2026-04-08",
+      "total_days": 2,
+      "priority": "Medium",
+      "notes": "Meeting is scheduled for April 13th. This task is to send the calendar invite.",
+      "escalation_details": "If not scheduled, the team may not be aligned for the final review before the demo.",
+      "skills_required": [
+        "Project Management"
+      ],
+      "skill_match": ""
+    }
+  ],
+  "meetings": [
+    {
+      "id": "m1",
+      "title": "Payment Integration & Env Vars Sync",
+      "purpose": "To confirm the completion of payment API, webhook integration, and environment variable setup for the payment gateway.",
+      "suggested_date": "2026-04-10T10:00",
+      "duration_mins": 30,
+      "recipients": [
+        "Arun",
+        "Vikram",
+        "Suresh",
+        "hariharan-projectmanager"
+      ],
+      "agenda": "Webhook implementation status; Vikram's code review feedback; Payment gateway environment variable update confirmation; Initial integration test status."
+    },
+    {
+      "id": "m2",
+      "title": "Frontend Cart & Checkout Status",
+      "purpose": "To verify the completion of the cart page and the resolution of the checkout payment redirect bug, ensuring frontend readiness.",
+      "suggested_date": "2026-04-10T12:00",
+      "duration_mins": 30,
+      "recipients": [
+        "Priya",
+        "Nithya",
+        "hariharan-projectmanager"
+      ],
+      "agenda": "Cart page completion status; Checkout payment redirect bug resolution; Overall frontend readiness for testing."
+    },
+    {
+      "id": "m3",
+      "title": "Final Pre-Demo Review",
+      "purpose": "To conduct a comprehensive review of all features and overall sprint readiness before the investor demo on April 15th.",
+      "suggested_date": "2026-04-13T10:00",
+      "duration_mins": 60,
+      "recipients": [
+        "hariharan-projectmanager",
+        "Vikram",
+        "Priya",
+        "Arun",
+        "Nithya",
+        "Suresh",
+        "Lakshmi"
+      ],
+      "agenda": "Overall sprint feature readiness; Outstanding issues and blockers; Final testing status; Demo run-through plan."
+    }
+  ],
+  "briefing": {
+    "briefing_title": "Plipkary Investor Demo - Critical Path Sync",
+    "what_was_discussed": [
+      "Backend APIs for product listing and cart are complete; payment API is 80% done.",
+      "Frontend product listing page is live, but the cart page is only 60% complete and was recently unblocked.",
+      "A critical bug is blocking the checkout flow, preventing the success page from loading after payment.",
+      "The hard deadline for all development is April 12th to prepare for the investor demo on April 15th."
+    ],
+    "what_was_decided": [
+      "All development work must be completed by April 12th for final testing.",
+      "The critical checkout redirect bug must be fixed by April 9th.",
+      "Arun must complete the payment webhook integration by April 10th.",
+      "Priya must complete the cart page by April 10th."
+    ],
+    "what_to_follow_up": [
+      "Confirm the critical checkout redirect bug is fixed (Nithya & Priya, due Apr 9th).",
+      "Check status of Razorpay webhook completion (Arun, due Apr 10th) and if Vikram's review is done.",
+      "Verify cart page is complete and ready for testing (Priya, due Apr 10th).",
+      "Confirm Suresh is unblocked with the payment gateway environment variables from Vikram."
+    ],
+    "open_questions": [
+      "What is the contingency plan if the checkout bug fix is delayed beyond April 9th?",
+      "With the cart page due on the 10th and its testing due on the 11th, is there enough buffer for bug fixes before the April 12th code freeze?"
+    ],
+    "risks_to_watch": [
+      "The checkout redirect bug is the single biggest risk to the investor demo. Its fix is on the critical path.",
+      "The tight deadline of April 12th leaves no room for slippage. Any delay in cart page completion or webhook integration will directly impact QA time.",
+      "Vikram has multiple high-priority tasks, creating a potential bottleneck for Arun and Suresh who are dependent on him."
+    ],
+    "suggested_agenda": [
+      "Live status check on the checkout redirect bug fix (Nithya).",
+      "Progress update on cart page and webhook integration (Priya, Arun).",
+      "Confirm all blockers are resolved (Suresh, Lakshmi).",
+      "Review QA progress and timeline for cart and payment flow (Lakshmi).",
+      "Finalize demo run-through plan and assign roles."
+    ],
+    "employee_status": [
+      {
+        "name": "Vikram",
+        "role": "Backend Lead",
+        "current_tasks": [
+          {
+            "title": "Review Arun's Razorpay Webhook Code",
+            "priority": "High",
+            "due_date": "2026-04-08",
+            "status": "pending"
+          },
+          {
+            "title": "Provide Updated Payment Gateway Environment Variables",
+            "priority": "High",
+            "due_date": "2026-04-08",
+            "status": "pending"
+          },
+          {
+            "title": "Fix 2 Bugs Found in Product Listing Page",
+            "priority": "High",
+            "due_date": "2026-04-08",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "High",
+        "flag": "On Track"
+      },
+      {
+        "name": "Priya",
+        "role": "Frontend Developer",
+        "current_tasks": [
+          {
+            "title": "Complete Frontend Cart Page Development",
+            "priority": "High",
+            "due_date": "2026-04-09",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Medium",
+        "flag": "On Track"
+      },
+      {
+        "name": "Arun",
+        "role": "Backend Developer",
+        "current_tasks": [
+          {
+            "title": "Complete Razorpay Webhook Handling",
+            "priority": "High",
+            "due_date": "2026-04-09",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Medium",
+        "flag": "On Track"
+      },
+      {
+        "name": "Nithya",
+        "role": "Frontend Developer",
+        "current_tasks": [
+          {
+            "title": "Fix Bug in Payment Redirect Flow",
+            "priority": "High",
+            "due_date": "2026-04-09",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Medium",
+        "flag": "Blocked"
+      },
+      {
+        "name": "Suresh",
+        "role": "DevOps",
+        "current_tasks": [],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "Blocked"
+      },
+      {
+        "name": "Lakshmi",
+        "role": "QA Engineer",
+        "current_tasks": [
+          {
+            "title": "Perform QA Testing for Cart Page",
+            "priority": "Medium",
+            "due_date": "2026-04-11",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "Blocked"
+      },
+      {
+        "name": "hariharan-projectmanager",
+        "role": "Project Manager",
+        "current_tasks": [
+          {
+            "title": "Schedule Final Sprint Review Meeting",
+            "priority": "Medium",
+            "due_date": "2026-04-10",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "On Track"
+      }
+    ]
+  }
+}

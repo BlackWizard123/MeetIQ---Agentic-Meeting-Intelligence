@@ -9,5 +9,80 @@
       "Priya"
     ],
     "timestamp": "2026-04-05T14:44:37.573559"
+  },
+  {
+    "id": "f9d9b9b6",
+    "title": "Sprint 12 Status",
+    "date": "2025-04-05",
+    "attendees": [
+      "Alice",
+      "John",
+      "Priya"
+    ],
+    "timestamp": "2026-04-05T18:10:56.135794"
+  },
+  {
+    "id": "6221132d",
+    "title": "Enterprise RAG Sprint 3 Status Update",
+    "date": "2025-04-06",
+    "attendees": [
+      "hariharan-projectmanager",
+      "Arjun",
+      "Sneha",
+      "Karthik",
+      "Divya",
+      "Rahul",
+      "Meena"
+    ],
+    "timestamp": "2026-04-06T09:27:30.991051",
+    "project": "Enterprise RAG"
+  },
+  {
+    "id": "a56d16f8",
+    "title": "Enterprise RAG Sprint 4 Status Update",
+    "date": "2025-04-06",
+    "attendees": [
+      "hariharan-projectmanager",
+      "Arjun",
+      "Sneha",
+      "Karthik",
+      "Divya",
+      "Rahul",
+      "Meena"
+    ],
+    "timestamp": "2026-04-06T12:10:40.282611",
+    "project": "Enterprise RAG"
+  },
+  {
+    "id": "e6105214",
+    "title": "Plipkary Sprint 1 Kickoff",
+    "date": "2025-04-07",
+    "attendees": [
+      "Hariharan",
+      "Vikram",
+      "Priya",
+      "Arun",
+      "Nithya",
+      "Suresh",
+      "Lakshmi"
+    ],
+    "timestamp": "2026-04-06T13:35:17.132740",
+    "project": "Plipkary"
+  },
+  {
+    "id": "8c8e9eff",
+    "title": "Plipkary Mid-Sprint Check",
+    "date": "2026-04-08",
+    "attendees": [
+      "hariharan-projectmanager",
+      "Vikram",
+      "Priya",
+      "Arun",
+      "Nithya",
+      "Suresh",
+      "Lakshmi"
+    ],
+    "timestamp": "2026-04-06T13:59:47.286870",
+    "project": "Plipkary"
   }
 ]

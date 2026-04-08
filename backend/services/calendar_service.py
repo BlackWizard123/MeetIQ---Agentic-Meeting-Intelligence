@@ -1,11 +1,11 @@
-import os
-import json
+import os, json
 from datetime import datetime, timedelta
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
-# Path to your hardcoded token (generated once via OAuth flow)
-TOKEN_FILE = os.path.join(os.path.dirname(__file__), "../token.json")
+TOKEN_FILE    = os.path.join(os.path.dirname(__file__), "../token.json")
+MANAGER_EMAIL = os.getenv("MANAGER_EMAIL", "")
+MANAGER_NAME  = os.getenv("MANAGER_NAME", "hariharan-projectmanager")
 
 SCOPES = [
     "https://www.googleapis.com/auth/calendar",
@@ -14,123 +14,135 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive.file",
 ]
 
-# Hardcoded manager email — update this to your Google account
-MANAGER_EMAIL = "your_manager_email@gmail.com"
+def _creds():
+    with open(TOKEN_FILE) as f:
+        return Credentials.from_authorized_user_info(json.load(f), SCOPES)
 
-
-def _get_credentials() -> Credentials:
-    if not os.path.exists(TOKEN_FILE):
-        raise FileNotFoundError(
-            "token.json not found. Run generate_token.py once to create it."
-        )
-    with open(TOKEN_FILE, "r") as f:
-        token_data = json.load(f)
-    return Credentials.from_authorized_user_info(token_data, SCOPES)
-
-
-def _get_calendar_service():
-    creds = _get_credentials()
-    return build("calendar", "v3", credentials=creds)
-
-
-def _get_tasks_service():
-    creds = _get_credentials()
-    return build("tasks", "v1", credentials=creds)
-
+def _calendar(): return build("calendar", "v3", credentials=_creds())
+def _tasks():    return build("tasks",    "v1", credentials=_creds())
 
 def _parse_date(date_str: str) -> str:
+    """Simple date-only parser for tasks. Returns YYYY-MM-DD."""
+    if not date_str or date_str.strip().upper() == "TBD":
+        from datetime import timedelta
+        return (datetime.now() + timedelta(days=7)).strftime("%Y-%m-%d")
+    s = date_str.strip()
+    # Handle datetime-local format — take date part only
+    if "T" in s:
+        s = s.split("T")[0]
+    try:
+        datetime.strptime(s, "%Y-%m-%d")
+        return s
+    except ValueError:
+        from datetime import timedelta
+        return (datetime.now() + timedelta(days=7)).strftime("%Y-%m-%d")
+
+def _parse_datetime(date_str: str) -> datetime:
     """
-    Converts 'YYYY-MM-DD' or 'TBD' to a usable date string.
-    Falls back to 7 days from now if TBD.
+    Parse date or datetime string into a datetime object (IST).
+    Accepts: YYYY-MM-DDTHH:MM  or  YYYY-MM-DD
+    Falls back to 7 days from now at 10:00 AM if invalid/TBD.
     """
-    if date_str == "TBD" or not date_str:
-        return (datetime.utcnow() + timedelta(days=7)).strftime("%Y-%m-%d")
-    return date_str
+    fallback = datetime.now() + timedelta(days=7)
+    fallback = fallback.replace(hour=10, minute=0, second=0, microsecond=0)
+
+    if not date_str or date_str.strip().upper() == "TBD":
+        return fallback
+    s = date_str.strip()
+    # datetime-local format: 2025-04-10T14:30
+    try:
+        return datetime.strptime(s, "%Y-%m-%dT%H:%M")
+    except ValueError:
+        pass
+    # date-only format: 2025-04-10
+    try:
+        return datetime.strptime(s, "%Y-%m-%d").replace(hour=10, minute=0)
+    except ValueError:
+        return fallback
 
 
 def create_calendar_event(meeting: dict) -> str:
     """
     Creates a Google Calendar event for a suggested meeting.
+    Always uses manager email as the organizer/attendee.
+    Recipients are listed in the description (no dummy emails needed).
     Returns the created event ID.
     """
-    service = _get_calendar_service()
-    date_str = _parse_date(meeting.get("suggested_date", "TBD"))
-    duration = meeting.get("duration_mins", 30)
+    svc      = _calendar()
+    start_dt = _parse_datetime(meeting.get("suggested_date", "TBD"))
+    duration = int(meeting.get("duration_mins", 30))
+    end_dt   = start_dt + timedelta(minutes=duration)
 
-    # Default to 10:00 AM on the suggested date
-    start_dt = datetime.strptime(date_str, "%Y-%m-%d").replace(hour=10, minute=0)
-    end_dt = start_dt + timedelta(minutes=duration)
+    recipients     = meeting.get("recipients", [])
+    recipient_text = ", ".join(recipients) if recipients else "Team"
 
-    # Build attendees list — all recipients + manager
-    recipients = meeting.get("recipients", [])
-    attendees = [{"email": MANAGER_EMAIL}]
-    # Note: for the hackathon, we only have the manager's account
-    # so recipients are mentioned in the description instead
-    recipient_names = ", ".join(recipients) if recipients else "Team"
+    # Only add attendees with valid emails — always just the manager for real invites
+    attendees = []
+    if MANAGER_EMAIL and "@" in MANAGER_EMAIL:
+        attendees.append({"email": MANAGER_EMAIL})
 
     event = {
         "summary": meeting.get("title", "Follow-up Meeting"),
         "description": (
             f"Purpose: {meeting.get('purpose', '')}\n\n"
-            f"Agenda: {meeting.get('agenda', '')}\n\n"
-            f"Intended participants: {recipient_names}\n\n"
-            "Scheduled via Meeting Intelligence"
+            f"Agenda:\n{meeting.get('agenda', '')}\n\n"
+            f"Intended participants: {recipient_text}\n\n"
+            "📅 Scheduled via MeetIQ — Meeting Intelligence"
         ),
-        "start": {"dateTime": start_dt.isoformat() + "Z", "timeZone": "UTC"},
-        "end":   {"dateTime": end_dt.isoformat() + "Z",   "timeZone": "UTC"},
-        "attendees": attendees,
+        "start": {"dateTime": start_dt.isoformat(), "timeZone": "Asia/Kolkata"},
+        "end":   {"dateTime": end_dt.isoformat(),   "timeZone": "Asia/Kolkata"},
         "reminders": {
             "useDefault": False,
             "overrides": [{"method": "popup", "minutes": 15}],
         },
     }
 
-    created = service.events().insert(calendarId="primary", body=event).execute()
+    # Only include attendees field if we have valid emails
+    if attendees:
+        event["attendees"] = attendees
+
+    created = svc.events().insert(calendarId="primary", body=event).execute()
     return created.get("id")
 
 
 def create_task(task: dict) -> str:
     """
-    Creates a Google Task for a team member's action item.
-    Since we only have the manager's account, the task title mentions the assignee.
+    Creates a Google Task under the 'MeetIQ Tasks' list.
+    Task title includes the assignee name since we only have the manager's account.
     Returns the created task ID.
     """
-    service = _get_tasks_service()
+    svc          = _tasks()
+    task_list_id = _get_or_create_task_list(svc, "MeetIQ Tasks")
 
-    # Get or create the "Meeting Intelligence" task list
-    task_list_id = _get_or_create_task_list(service, "Meeting Intelligence")
-
-    due_date_str = _parse_date(task.get("due_date", "TBD"))
-    due_dt = datetime.strptime(due_date_str, "%Y-%m-%d").replace(hour=9, minute=0)
+    date_str = _parse_date(task.get("due_date", "TBD"))
+    due_dt   = datetime.strptime(date_str, "%Y-%m-%d").replace(hour=9, minute=0)
 
     assignee = task.get("assignee", "Unassigned")
     priority = task.get("priority", "Medium")
-    notes = task.get("notes", "")
+    notes    = task.get("notes", "")
+    checker  = task.get("checker", MANAGER_NAME)
 
-    task_body = {
+    body = {
         "title": f"[{assignee}] {task.get('title', 'Task')}",
         "notes": (
             f"Assignee: {assignee}\n"
             f"Priority: {priority}\n"
+            f"Checker: {checker}\n"
+            f"Due: {date_str}\n"
             f"Notes: {notes}\n\n"
-            "Created via Meeting Intelligence"
+            "Created via MeetIQ"
         ),
         "due": due_dt.isoformat() + "Z",
     }
 
-    created = service.tasks().insert(tasklist=task_list_id, body=task_body).execute()
+    created = svc.tasks().insert(tasklist=task_list_id, body=body).execute()
     return created.get("id")
 
 
-def _get_or_create_task_list(service, list_name: str) -> str:
-    """
-    Returns the ID of a task list by name, creating it if it doesn't exist.
-    """
-    result = service.tasklists().list().execute()
+def _get_or_create_task_list(svc, name: str) -> str:
+    result = svc.tasklists().list().execute()
     for tl in result.get("items", []):
-        if tl.get("title") == list_name:
+        if tl.get("title") == name:
             return tl["id"]
-
-    # Create new task list
-    new_list = service.tasklists().insert(body={"title": list_name}).execute()
+    new_list = svc.tasklists().insert(body={"title": name}).execute()
     return new_list["id"]

@@ -1,0 +1,161 @@
+{
+  "id": "f9d9b9b6",
+  "timestamp": "2026-04-05T18:10:56.135794",
+  "memo": {
+    "title": "Sprint 12 Status",
+    "date": "2025-04-05",
+    "attendees": [
+      "Alice",
+      "John",
+      "Priya"
+    ],
+    "summary": "The team discussed the current sprint status, noting that the auth module is blocked pending an API fix. John committed to fixing the API by April 7, and a review meeting was planned for next Monday. The release date was moved to April 10.",
+    "decisions": [
+      "Release pushed to April 10"
+    ],
+    "blockers": [
+      "Auth module blocked pending API fix"
+    ],
+    "next_steps": [
+      "John will fix the API by April 7",
+      "Schedule a review meeting next Monday with John and Priya"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Fix the API",
+      "assignee": "John",
+      "due_date": "2025-04-07",
+      "priority": "High",
+      "notes": "Auth module is blocked; John needs to fix the API."
+    },
+    {
+      "id": "t2",
+      "title": "Schedule review meeting",
+      "assignee": "Alice",
+      "due_date": "2025-04-12",
+      "priority": "Medium",
+      "notes": "Meeting with John and Priya next Monday."
+    },
+    {
+      "id": "t3",
+      "title": "Update release date",
+      "assignee": "Unassigned",
+      "due_date": "TBD",
+      "priority": "Medium",
+      "notes": "Release pushed to April 10."
+    }
+  ],
+  "meetings": [
+    {
+      "id": "m1",
+      "title": "API Fix Sync",
+      "purpose": "Confirm that John has completed the API fix and address any immediate issues",
+      "suggested_date": "2025-04-07",
+      "duration_mins": 15,
+      "recipients": [
+        "John",
+        "Alice"
+      ],
+      "agenda": "Status update on API fix; Identify any blockers; Agree on next steps"
+    },
+    {
+      "id": "m2",
+      "title": "Design & API Integration Review",
+      "purpose": "Review how Priya's designs integrate with the newly fixed API",
+      "suggested_date": "2025-04-07",
+      "duration_mins": 30,
+      "recipients": [
+        "John",
+        "Priya",
+        "Alice"
+      ],
+      "agenda": "Walk through designs; Verify API integration; Confirm readiness for release"
+    },
+    {
+      "id": "m3",
+      "title": "Release Preparation Meeting",
+      "purpose": "Finalize all tasks and confirm readiness for the April 10 release",
+      "suggested_date": "2025-04-09",
+      "duration_mins": 60,
+      "recipients": [
+        "Alice",
+        "John",
+        "Priya"
+      ],
+      "agenda": "Review release checklist; Align on final deliverables; Address last\u2011minute risks"
+    }
+  ],
+  "briefing": {
+    "briefing_title": "Briefing for Sprint 12 Follow-up",
+    "what_was_discussed": [
+      "The team reviewed the status of Sprint 12.",
+      "A blocker was identified: the authentication module is blocked pending an API fix.",
+      "John committed to resolving the API issue by April 7."
+    ],
+    "what_was_decided": [
+      "The project release date is officially pushed to April 10."
+    ],
+    "what_to_follow_up": [
+      "Confirm completion of the API fix by John, due April 7.",
+      "Ensure the review meeting with John and Priya has been scheduled for the upcoming Monday."
+    ],
+    "open_questions": [
+      "Is the API fix complete and has it successfully unblocked the auth module?",
+      "Has the design and API integration review meeting been scheduled?",
+      "Who is assigned to the 'Update release date' task and has it been completed?"
+    ],
+    "risks_to_watch": [
+      "The April 10 release date is critically dependent on the timely completion of the API fix. Any delay puts the release at risk.",
+      "Potential integration issues between the new API and Priya's designs may arise during the review, which could impact the timeline."
+    ],
+    "suggested_agenda": [
+      "Status update on 'Fix the API' task from John.",
+      "Confirmation from Priya that the auth module work is now unblocked.",
+      "Review status of 'Schedule review meeting' task from Alice.",
+      "Assign owner for the 'Update release date' task.",
+      "Re-evaluate confidence in meeting the April 10 release date."
+    ],
+    "employee_status": [
+      {
+        "name": "Alice",
+        "role": "Project Manager",
+        "current_tasks": [
+          {
+            "title": "Schedule review meeting",
+            "priority": "Medium",
+            "due_date": "2025-04-12",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "On Track"
+      },
+      {
+        "name": "John",
+        "role": "Backend Developer",
+        "current_tasks": [
+          {
+            "title": "Fix the API",
+            "priority": "High",
+            "due_date": "2025-04-07",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "On Track"
+      },
+      {
+        "name": "Priya",
+        "role": "Designer/Frontend Developer",
+        "current_tasks": [],
+        "completed_tasks": [],
+        "workload": "Free",
+        "flag": "Blocked"
+      }
+    ]
+  }
+}

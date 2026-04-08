@@ -1,183 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Meeting Intelligence</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MeetIQ — Meeting Intelligence</title>
+  <link rel="stylesheet" href="style.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- ── SIDEBAR ─────────────────────────────────────────── -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="logo">
-        <span class="logo-icon">◈</span>
-        <span class="logo-text">MeetIQ</span>
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo"><span class="logo-icon">◈</span><span class="logo-text">MeetIQ</span></div>
+    <p class="sidebar-sub">Meeting Intelligence</p>
+  </div>
+  <button class="new-meeting-btn" onclick="showUploadScreen()"><span>+</span> New Meeting</button>
+  <button class="nav-btn" onclick="showTrackerScreen()">📊 Task Tracker</button>
+  <button class="nav-btn" onclick="showTranscriptScreen()">📁 Transcripts</button>
+  <div class="sidebar-section-label">PAST MEETINGS</div>
+  <div class="history-list" id="historyList"><div class="history-empty">No meetings yet</div></div>
+
+  <!-- Profile section -->
+  <div class="sidebar-profile">
+    <!-- Dropdown menu (above) -->
+    <div class="profile-menu" id="profileMenu">
+      <button class="menu-item" onclick="dummyAction('Settings')">
+        <span class="menu-icon">⚙️</span> Settings
+      </button>
+      <div class="menu-divider"></div>
+      <div class="menu-item" onclick="toggleThemeSubmenu()">
+        <span class="menu-icon">🎨</span>
+        <span style="flex:1">Theme</span>
+        <span style="font-size:11px;color:var(--text3)" id="currentThemeLabel">Dark</span>
+        <span style="font-size:11px;margin-left:4px;color:var(--text3)">›</span>
       </div>
-      <p class="sidebar-sub">Meeting Intelligence</p>
+      <div class="theme-submenu" id="themeSubmenu">
+        <div class="theme-option active" id="theme-dark" onclick="setTheme('dark')">
+          <div class="theme-dot dark"></div> Dark
+        </div>
+        <div class="theme-option" id="theme-light" onclick="setTheme('light')">
+          <div class="theme-dot light"></div> Light
+        </div>
+        <div class="theme-option" id="theme-google" onclick="setTheme('google')">
+          <div class="theme-dot google"></div> Google Workspace
+        </div>
+      </div>
+      <div class="menu-divider"></div>
+      <button class="menu-item danger" onclick="dummyAction('Logout')">
+        <span class="menu-icon">🚪</span> Logout
+      </button>
     </div>
 
-    <button class="new-meeting-btn" onclick="showUploadScreen()">
-      <span>+</span> New Meeting
+    <!-- Profile button -->
+    <button class="profile-btn" id="profileBtn" onclick="toggleProfileMenu()">
+      <div class="profile-avatar">H</div>
+      <div class="profile-info">
+        <div class="profile-name">Hariharan</div>
+        <div class="profile-role">Project Manager · EMP001</div>
+      </div>
+      <span class="profile-chevron">▲</span>
     </button>
+  </div>
 
-    <div class="sidebar-section-label">PAST MEETINGS</div>
-    <div class="history-list" id="historyList">
-      <div class="history-empty">No meetings yet</div>
-    </div>
-  </aside>
+</aside>
 
-  <!-- ── MAIN CONTENT ───────────────────────────────────── -->
-  <main class="main">
+<main class="main">
 
-    <!-- UPLOAD SCREEN -->
-    <div class="screen active" id="uploadScreen">
-      <div class="upload-center">
-        <div class="upload-eyebrow">READY TO PROCESS</div>
-        <h1 class="upload-title">Drop your transcript.<br/>We'll handle the rest.</h1>
-        <p class="upload-sub">Upload a <code>.txt</code> meeting transcript and MeetIQ will extract the memo, tasks, and schedule follow-ups automatically.</p>
-
-        <div class="dropzone" id="dropzone">
-          <div class="dropzone-icon">⌁</div>
-          <div class="dropzone-text">Drag & drop your <code>.txt</code> file here</div>
-          <div class="dropzone-or">or</div>
-          <label class="file-label" for="fileInput">Browse File</label>
-          <input type="file" id="fileInput" accept=".txt" hidden />
-          <div class="file-name" id="fileName"></div>
-        </div>
-
-        <button class="process-btn" id="processBtn" onclick="processTranscript()" disabled>
-          <span class="btn-text">Process Meeting</span>
-          <span class="btn-icon">→</span>
-        </button>
-
-        <div class="loader hidden" id="loader">
-          <div class="loader-bar"></div>
-          <div class="loader-label" id="loaderLabel">Running agents...</div>
-        </div>
+  <!-- UPLOAD -->
+  <div class="screen active" id="uploadScreen">
+    <div class="upload-center">
+      <div class="upload-eyebrow">READY TO PROCESS</div>
+      <h1 class="upload-title">Drop your transcript.<br/>We'll handle the rest.</h1>
+      <p class="upload-sub">Select a project, upload a <code>.txt</code> transcript — MeetIQ extracts everything automatically.</p>
+      <div class="field-group">
+        <label class="field-label-top">SELECT PROJECT</label>
+        <select id="projectSelect" class="field-select" onchange="onProjectChange(this)">
+          <option value="">— Select Project —</option>
+        </select>
+      </div>
+      <div class="dropzone" id="dropzone">
+        <div class="dropzone-icon">⌁</div>
+        <div class="dropzone-text">Drag & drop your <code>.txt</code> file here</div>
+        <div class="dropzone-or">or</div>
+        <label class="file-label" for="fileInput">Browse File</label>
+        <input type="file" id="fileInput" accept=".txt" hidden/>
+        <div class="file-name" id="fileName"></div>
+      </div>
+      <button class="process-btn" id="processBtn" onclick="processTranscript()" disabled>
+        <span class="btn-text">Process Meeting</span><span class="btn-icon">→</span>
+      </button>
+      <div class="loader hidden" id="loader">
+        <div class="loader-bar"></div>
+        <div class="loader-label" id="loaderLabel">Running agents…</div>
       </div>
     </div>
+  </div>
 
-    <!-- REVIEW SCREEN -->
-    <div class="screen" id="reviewScreen">
-
-      <!-- Step indicator -->
-      <div class="steps-bar">
-        <div class="step active" id="step1"><span class="step-num">01</span><span class="step-name">Memo</span></div>
-        <div class="step-line"></div>
-        <div class="step" id="step2"><span class="step-num">02</span><span class="step-name">Tasks</span></div>
-        <div class="step-line"></div>
-        <div class="step" id="step3"><span class="step-num">03</span><span class="step-name">Meetings</span></div>
-      </div>
-
-      <!-- ── MEMO PANEL ── -->
-      <div class="panel active" id="memoPanel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-eyebrow">STEP 01</div>
-            <h2 class="panel-title">Meeting Memo</h2>
-          </div>
-          <div class="panel-actions">
-            <button class="btn-ghost" onclick="resetMemo()">↺ Reset</button>
-            <button class="btn-primary" onclick="confirmMemo()">Confirm Memo →</button>
-          </div>
-        </div>
-
-        <div class="memo-grid">
-          <div class="memo-field full">
-            <label>MEETING TITLE</label>
-            <input type="text" id="memoTitle" class="field-input" />
-          </div>
-          <div class="memo-field">
-            <label>DATE</label>
-            <input type="text" id="memoDate" class="field-input" />
-          </div>
-          <div class="memo-field">
-            <label>ATTENDEES</label>
-            <input type="text" id="memoAttendees" class="field-input" placeholder="Comma separated" />
-          </div>
-          <div class="memo-field full">
-            <label>SUMMARY</label>
-            <textarea id="memoSummary" class="field-textarea" rows="3"></textarea>
-          </div>
-          <div class="memo-field">
-            <label>DECISIONS</label>
-            <textarea id="memoDecisions" class="field-textarea" rows="4" placeholder="One per line"></textarea>
-          </div>
-          <div class="memo-field">
-            <label>BLOCKERS</label>
-            <textarea id="memoBlockers" class="field-textarea" rows="4" placeholder="One per line"></textarea>
-          </div>
-          <div class="memo-field full">
-            <label>NEXT STEPS</label>
-            <textarea id="memoNextSteps" class="field-textarea" rows="3" placeholder="One per line"></textarea>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── TASKS PANEL ── -->
-      <div class="panel" id="tasksPanel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-eyebrow">STEP 02</div>
-            <h2 class="panel-title">Action Items</h2>
-          </div>
-          <div class="panel-actions">
-            <button class="btn-ghost" onclick="addTask()">+ Add Task</button>
-            <button class="btn-primary" onclick="confirmTasks()">Confirm Tasks →</button>
-          </div>
-        </div>
-        <div class="cards-grid" id="tasksGrid"></div>
-      </div>
-
-      <!-- ── MEETINGS PANEL ── -->
-      <div class="panel" id="meetingsPanel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-eyebrow">STEP 03</div>
-            <h2 class="panel-title">Suggested Meetings</h2>
-          </div>
-          <div class="panel-actions">
-            <button class="btn-ghost" onclick="addMeeting()">+ Add Meeting</button>
-            <button class="btn-primary" id="scheduleAllBtn" onclick="scheduleAll()">Schedule All ↗</button>
-          </div>
-        </div>
-        <div class="cards-grid" id="meetingsGrid"></div>
-
-        <div class="finalize-bar" id="finalizeBar" style="display:none">
-          <div class="finalize-info">
-            <span class="finalize-icon">✓</span>
-            <span>Scheduled to Google Calendar & Tasks</span>
-            <a href="#" id="sheetLink" target="_blank" class="sheet-link">View in Google Sheets ↗</a>
-          </div>
-        </div>
-      </div>
-
+  <!-- REVIEW -->
+  <div class="screen" id="reviewScreen">
+    <div class="steps-bar">
+      <div class="step active" id="step1"><span class="step-num">01</span><span class="step-name">Memo</span></div>
+      <div class="step-line"></div>
+      <div class="step" id="step2"><span class="step-num">02</span><span class="step-name">Tasks</span></div>
+      <div class="step-line"></div>
+      <div class="step" id="step3"><span class="step-num">03</span><span class="step-name">Meetings</span></div>
     </div>
 
-    <!-- THREAD SCREEN -->
-    <div class="screen" id="threadScreen">
-      <div class="thread-header">
-        <button class="back-btn" onclick="showUploadScreen()">← Back</button>
-        <div>
-          <div class="panel-eyebrow">MEETING BRIEFING</div>
-          <h2 class="panel-title" id="threadTitle">Past Meeting</h2>
+    <!-- MEMO PANEL -->
+    <div class="panel active" id="memoPanel">
+      <div class="panel-header">
+        <div><div class="panel-eyebrow">STEP 01</div><h2 class="panel-title">Meeting Memo</h2></div>
+        <div class="panel-actions">
+          <button class="btn-ghost" onclick="resetMemo()">↺ Reset</button>
+          <button class="btn-primary" onclick="confirmMemo()">Confirm Memo →</button>
         </div>
       </div>
-
-      <div class="thread-meta" id="threadMeta"></div>
-
-      <div class="thread-grid" id="threadGrid"></div>
+      <div class="memo-grid">
+        <div class="memo-field full"><label>MEETING TITLE</label><input type="text" id="memoTitle" class="field-input"/></div>
+        <div class="memo-field"><label>DATE</label><input type="text" id="memoDate" class="field-input"/></div>
+        <div class="memo-field"><label>PROJECT</label><input type="text" id="memoProject" class="field-input"/></div>
+        <div class="memo-field full"><label>ATTENDEES</label><input type="text" id="memoAttendees" class="field-input" placeholder="Comma separated"/></div>
+        <div class="memo-field full"><label>SUMMARY POINTS</label><textarea id="memoSummary" class="field-textarea" placeholder="One point per line"></textarea></div>
+        <div class="memo-field"><label>KEY DECISIONS</label><textarea id="memoDecisions" class="field-textarea" placeholder="One per line"></textarea></div>
+        <div class="memo-field"><label>BLOCKERS</label><textarea id="memoBlockers" class="field-textarea" placeholder="One per line"></textarea></div>
+        <div class="memo-field"><label>RISKS</label><textarea id="memoRisks" class="field-textarea" placeholder="One per line"></textarea></div>
+        <div class="memo-field"><label>DEPENDENCIES</label><textarea id="memoDependencies" class="field-textarea" placeholder="One per line"></textarea></div>
+        <div class="memo-field full"><label>NEXT STEPS</label><textarea id="memoNextSteps" class="field-textarea" placeholder="One per line"></textarea></div>
+        <div class="memo-field"><label>MANAGER ACTIONS</label><textarea id="memoManagerActions" class="field-textarea" placeholder="Things Hariharan committed to"></textarea></div>
+        <div class="memo-field"><label>OPEN QUESTIONS</label><textarea id="memoOpenQuestions" class="field-textarea" placeholder="Unresolved items"></textarea></div>
+        <div class="memo-field full"><label>HIGHLIGHTS</label><textarea id="memoHighlights" class="field-textarea" placeholder="Achievements, milestones"></textarea></div>
+        <div class="memo-field"><label>FOLLOW-UP REQUIRED</label>
+          <div class="toggle-row"><input type="checkbox" id="memoFollowUp"/><label for="memoFollowUp" class="toggle-label">Yes, schedule follow-up</label></div>
+        </div>
+      </div>
     </div>
 
-  </main>
+    <!-- TASKS PANEL -->
+    <div class="panel" id="tasksPanel">
+      <div class="panel-header">
+        <div><div class="panel-eyebrow">STEP 02</div><h2 class="panel-title">Action Items</h2></div>
+        <div class="panel-actions">
+          <button class="btn-ghost" onclick="addTask()">+ Add Task</button>
+          <button class="btn-primary" onclick="confirmTasks()">Confirm Tasks →</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="tasksGrid"></div>
+    </div>
 
-  <!-- TOAST -->
-  <div class="toast" id="toast"></div>
+    <!-- MEETINGS PANEL -->
+    <div class="panel" id="meetingsPanel">
+      <div class="panel-header">
+        <div><div class="panel-eyebrow">STEP 03</div><h2 class="panel-title">Suggested Meetings</h2></div>
+        <div class="panel-actions">
+          <button class="btn-ghost" onclick="addMeeting()">+ Add Meeting</button>
+          <button class="btn-primary" id="scheduleAllBtn" onclick="scheduleAll()">Schedule All ↗</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="meetingsGrid"></div>
+      <div class="finalize-bar" id="finalizeBar" style="display:none">
+        <div class="finalize-info">
+          <span class="finalize-icon">✓</span>
+          <span>Scheduled to Google Calendar & Tasks</span>
+          <a href="#" id="sheetLink" target="_blank" class="sheet-link">Meeting Log ↗</a>
+          <a href="#" id="trackerLink" target="_blank" class="sheet-link">Task Tracker ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <script src="app.js"></script>
+  <!-- THREAD SCREEN -->
+  <div class="screen" id="threadScreen">
+    <div class="thread-header">
+      <button class="back-btn" onclick="showUploadScreen()">← Back</button>
+      <div style="flex:1">
+        <div class="panel-eyebrow">MEETING BRIEFING</div>
+        <h2 class="panel-title" id="threadTitle">Past Meeting</h2>
+      </div>
+      <button class="btn-ghost" id="refreshBriefingBtn" onclick="refreshBriefing()" data-meeting-id="">↺ Refresh</button>
+    </div>
+    <div class="thread-meta" id="threadMeta"></div>
+    <div class="thread-grid" id="threadGrid"></div>
+  </div>
+
+  <!-- TRACKER SCREEN -->
+  <div class="screen" id="trackerScreen">
+    <div class="tracker-header">
+      <div><div class="panel-eyebrow">TASK TRACKER</div><h2 class="panel-title">Project Tasks</h2></div>
+    </div>
+    <div class="tracker-projects" id="trackerProjects"></div>
+    <div id="trackerTableSection" style="display:none">
+      <div class="tracker-table-header">
+        <h3 id="trackerProjectTitle"></h3>
+        <button class="btn-primary" onclick="updateTracker()">↑ Update Sheet</button>
+      </div>
+      <div class="table-wrapper">
+        <table class="tracker-table">
+          <thead><tr>
+            <th>ID</th><th>Task</th><th>Assignee</th><th>Companion</th><th>Guide</th>
+            <th>Priority</th><th>Status</th><th>Due Date</th><th>Notes</th>
+          </tr></thead>
+          <tbody id="trackerTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- TRANSCRIPT LIBRARY SCREEN -->
+  <div class="screen" id="transcriptScreen">
+    <div class="tracker-header">
+      <div>
+        <div class="panel-eyebrow">TRANSCRIPT LIBRARY</div>
+        <h2 class="panel-title">All Meeting Transcripts</h2>
+      </div>
+    </div>
+    <div id="transcriptList" style="padding:24px 32px"></div>
+
+    <!-- Detail panel -->
+    <div id="transcriptDetail" style="display:none; border-top:1px solid var(--border); margin-top:8px;">
+      <div id="transcriptDetailContent" style="padding:24px 32px"></div>
+    </div>
+  </div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
 </body>
 </html>

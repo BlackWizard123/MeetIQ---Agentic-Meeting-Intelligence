@@ -60,5 +60,83 @@
       ],
       "agenda": "Confirm API fix completion; Validate design integration; Identify any remaining issues"
     }
-  ]
+  ],
+  "briefing": {
+    "briefing_title": "Sprint 12 Follow-up & API Blocker Review",
+    "what_was_discussed": [
+      "The authentication module development is currently blocked.",
+      "The blocker is an unfinished API that John is working on.",
+      "Priya's design work is complete but cannot be integrated until the API is ready.",
+      "The project release date was delayed to accommodate the fix."
+    ],
+    "what_was_decided": [
+      "The official release date is pushed to April 10, 2026.",
+      "John committed to delivering the API fix by April 7, 2026.",
+      "A follow-up review meeting will be held to validate the fix and its integration with the designs."
+    ],
+    "what_to_follow_up": [
+      "Confirm with John if the API fix is on track for the April 7 deadline.",
+      "Check with Alice if the 'API Integration Review' meeting has been scheduled with John and Priya.",
+      "Ensure the task 'Update the release date to April 10' has been assigned and completed."
+    ],
+    "open_questions": [
+      "Is the API fix progressing as expected for the April 7 delivery?",
+      "What is the contingency plan if the API fix is delayed further?",
+      "Are there any other downstream tasks or team members blocked by this API issue?"
+    ],
+    "risks_to_watch": [
+      "The April 10 release date is critically dependent on the API fix being delivered on April 7. Any slip will cause another release delay.",
+      "Priya is currently idle, which impacts team velocity and resource utilization. We need to confirm if she can be assigned other tasks."
+    ],
+    "suggested_agenda": [
+      "Status update on 'Fix the API' task from John.",
+      "Confirmation of 'API Integration Review' meeting schedule.",
+      "Discuss and define a risk mitigation plan for potential API fix delays.",
+      "Check Priya's availability for other tasks while she is blocked."
+    ],
+    "employee_status": [
+      {
+        "name": "Alice",
+        "role": "Project Manager",
+        "current_tasks": [
+          {
+            "title": "Schedule a review meeting",
+            "priority": "Medium",
+            "due_date": "2026-04-06",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "On Track"
+      },
+      {
+        "name": "John",
+        "role": "Developer",
+        "current_tasks": [
+          {
+            "title": "Fix the API",
+            "priority": "High",
+            "due_date": "2026-04-07",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Medium",
+        "flag": "On Track"
+      },
+      {
+        "name": "Priya",
+        "role": "Designer",
+        "current_tasks": [],
+        "completed_tasks": [
+          {
+            "title": "Auth module designs"
+          }
+        ],
+        "workload": "Low",
+        "flag": "Blocked"
+      }
+    ]
+  }
 }

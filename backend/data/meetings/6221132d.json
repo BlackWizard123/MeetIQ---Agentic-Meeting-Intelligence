@@ -1,0 +1,255 @@
+{
+  "id": "6221132d",
+  "timestamp": "2026-04-06T09:27:30.991051",
+  "memo": {
+    "title": "Enterprise RAG Sprint 3 Status Update",
+    "date": "2025-04-06",
+    "attendees": [
+      "hariharan-projectmanager",
+      "Arjun",
+      "Sneha",
+      "Karthik",
+      "Divya",
+      "Rahul",
+      "Meena"
+    ],
+    "project": "Enterprise RAG",
+    "summary_points": [
+      "Backend document ingestion endpoints are complete, but vector embedding latency is high at 4 seconds, exceeding the 1-second target.",
+      "Sneha is working on a fix for the latency issue by implementing a sliding window chunking strategy, which requires 3 days.",
+      "Karthik will build a batch upload endpoint by Tuesday to enable large-scale testing, with Arjun assisting on the authentication part.",
+      "The frontend search UI is 70% complete and is currently blocked waiting for the API response schema from Sneha.",
+      "Meena has completed ingestion test cases, finding 3 bugs (1 critical, 2 medium). The critical bug is fixed, and Karthik will fix the medium ones by Wednesday.",
+      "The team is working towards a client demo on April 14th, making the latency issue the highest priority risk."
+    ],
+    "key_decisions": [
+      "Sneha will implement a sliding window chunking strategy to reduce embedding latency.",
+      "Arjun will guide Karthik on implementing OAuth2 authentication for the new batch upload endpoint.",
+      "Sneha must provide the API response schema to Divya by the end of the day.",
+      "Divya will serve as the primary guide for Rahul on any TypeScript-related challenges."
+    ],
+    "blockers": [
+      "Vector embedding pipeline latency is 4 seconds per query, which is a blocker for meeting performance targets.",
+      "Frontend search UI development is blocked pending the final API response schema from Sneha."
+    ],
+    "risks": [
+      "The high embedding latency is a significant risk for the client demo scheduled for April 14th. A fallback plan (using a smaller model) was mentioned if the primary fix is unsuccessful."
+    ],
+    "dependencies": [
+      "Sneha's large-scale testing depends on Karthik completing the batch document upload endpoint.",
+      "Divya's completion of the search UI depends on Sneha providing the API response schema.",
+      "Karthik's implementation of the batch endpoint's authentication depends on guidance from Arjun.",
+      "Hariharan's client status email depends on receiving the performance benchmark report from Arjun."
+    ],
+    "next_steps": [
+      "Arjun: Send performance benchmark report to Hariharan by tonight.",
+      "Arjun: Guide Karthik on authentication tomorrow morning.",
+      "Sneha: Share the API response schema with Divya by EOD today.",
+      "Sneha: Implement and test the sliding window approach to fix latency, due in 3 days (Thursday).",
+      "Karthik: Build the batch upload endpoint by Tuesday.",
+      "Karthik: Fix the two open medium-priority bugs by Wednesday.",
+      "Divya: Complete the search UI within 2 days after receiving the schema from Sneha.",
+      "Rahul: Finalize loading states and error handling on the frontend by Tuesday.",
+      "Meena: Begin regression testing from Thursday."
+    ],
+    "manager_actions": [
+      "Schedule a mid-week check-in on Wednesday to review progress.",
+      "Send a status update email to the client today."
+    ],
+    "open_questions": [],
+    "highlights": [
+      "FastAPI endpoints for document ingestion are completed and deployed.",
+      "The frontend UI for document upload is complete.",
+      "Test cases for the document ingestion flow have been completed.",
+      "A critical bug identified by the testing team was fixed promptly by Arjun."
+    ],
+    "follow_up_required": true
+  },
+  "tasks": [],
+  "meetings": [
+    {
+      "id": "m1",
+      "title": "OAuth2 Guidance for Batch Upload",
+      "purpose": "To guide Karthik on implementing OAuth2 authentication for the batch upload API endpoint.",
+      "suggested_date": "2025-04-07",
+      "duration_mins": 30,
+      "recipients": [
+        "Arjun",
+        "Karthik"
+      ],
+      "agenda": "Review OAuth2 concepts; Discuss implementation strategy for batch upload endpoint; Address specific questions Karthik has"
+    },
+    {
+      "id": "m2",
+      "title": "Mid-week Sprint 3 Progress Check-in",
+      "purpose": "To review the progress on critical Sprint 3 tasks, especially embedding latency and batch upload, before the client demo.",
+      "suggested_date": "2025-04-09",
+      "duration_mins": 30,
+      "recipients": [
+        "hariharan-projectmanager",
+        "Arjun",
+        "Sneha",
+        "Karthik",
+        "Divya",
+        "Rahul",
+        "Meena"
+      ],
+      "agenda": "Review embedding latency optimization progress; Status update on batch upload endpoint; Discuss any new blockers; Confirm readiness for client demo"
+    }
+  ],
+  "briefing": {
+    "briefing_title": "Enterprise RAG - Sprint 3 Mid-Week Check-in Briefing",
+    "what_was_discussed": [
+      "Backend document ingestion endpoints are complete, but vector embedding latency is high at 4 seconds, far exceeding the 1-second target.",
+      "A plan was put in place for Sneha to fix the latency issue by implementing a sliding window chunking strategy.",
+      "The frontend search UI development was 70% complete but blocked, waiting for the API response schema from the backend.",
+      "The QA team completed ingestion test cases, finding several bugs which are now being addressed.",
+      "The team is focused on preparing for a critical client demo on April 14th."
+    ],
+    "what_was_decided": [
+      "Sneha will implement a sliding window chunking strategy to reduce embedding latency, due Thursday.",
+      "Karthik will build a batch upload endpoint by Tuesday, with guidance from Arjun on authentication.",
+      "Sneha was to provide the final API response schema to Divya by EOD Monday to unblock frontend development.",
+      "Karthik will fix two medium-priority bugs by Wednesday."
+    ],
+    "what_to_follow_up": [
+      "Confirm if Sneha delivered the API response schema to Divya. This was the primary blocker for the frontend team.",
+      "Check the status of the vector embedding latency. Has the new chunking strategy been implemented and what are the new performance metrics?",
+      "Verify if Karthik completed the batch upload endpoint, which was due Tuesday.",
+      "Confirm if the two medium-priority bugs assigned to Karthik have been resolved ahead of the Wednesday deadline.",
+      "Check on Divya's progress on the search UI, assuming she was unblocked."
+    ],
+    "open_questions": [
+      "What is the current embedding latency? Are we meeting the 1-second target?",
+      "Is the batch upload endpoint complete and deployed for large-scale testing?",
+      "Is the frontend UI development back on track? What is the new estimated completion date?",
+      "What is our confidence level for the client demo on April 14th? Do we need to prepare the fallback plan (smaller model)?",
+      "Are there any new blockers that have emerged since Monday?"
+    ],
+    "risks_to_watch": [
+      "The high embedding latency remains the biggest risk to the project and the upcoming client demo. If Sneha's fix is insufficient, the demo will be compromised.",
+      "A cascading dependency exists where large-scale testing is dependent on the batch upload endpoint. Any delay from Karthik will impact Sneha's ability to validate her fix at scale.",
+      "The frontend UI has a compressed timeline. Any further delays or issues will risk it not being ready for the demo."
+    ],
+    "suggested_agenda": [
+      "Review of embedding latency performance metrics (Sneha).",
+      "Status update and demo of the batch upload endpoint (Karthik).",
+      "Progress report on the frontend search UI and confirmation of unblocking (Divya).",
+      "Confirmation of bug fixes and status of regression testing plan (Karthik & Meena).",
+      "Final go/no-go assessment on readiness for the April 14th client demo."
+    ],
+    "employee_status": [
+      {
+        "name": "Arjun",
+        "role": "Lead Engineer",
+        "current_tasks": [
+          {
+            "title": "Guide Karthik on authentication",
+            "priority": "Medium",
+            "due_date": "2025-04-07",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [
+          {
+            "title": "Send performance benchmark report to Hariharan"
+          },
+          {
+            "title": "Fixed critical bug from ingestion testing"
+          }
+        ],
+        "workload": "Low",
+        "flag": "On Track"
+      },
+      {
+        "name": "Sneha",
+        "role": "Backend Engineer",
+        "current_tasks": [
+          {
+            "title": "Implement and test sliding window approach for latency",
+            "priority": "High",
+            "due_date": "2025-04-10",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [
+          {
+            "title": "Share the API response schema with Divya"
+          }
+        ],
+        "workload": "Low",
+        "flag": "On Track"
+      },
+      {
+        "name": "Karthik",
+        "role": "Backend Engineer",
+        "current_tasks": [
+          {
+            "title": "Build the batch upload endpoint",
+            "priority": "High",
+            "due_date": "2025-04-08",
+            "status": "pending"
+          },
+          {
+            "title": "Fix two open medium-priority bugs",
+            "priority": "Medium",
+            "due_date": "2025-04-09",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Medium",
+        "flag": "On Track"
+      },
+      {
+        "name": "Divya",
+        "role": "Frontend Engineer",
+        "current_tasks": [
+          {
+            "title": "Complete the search UI",
+            "priority": "High",
+            "due_date": "2025-04-09",
+            "status": "blocked"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "Blocked"
+      },
+      {
+        "name": "Rahul",
+        "role": "Frontend Engineer",
+        "current_tasks": [
+          {
+            "title": "Finalize loading states and error handling on frontend",
+            "priority": "Medium",
+            "due_date": "2025-04-08",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "On Track"
+      },
+      {
+        "name": "Meena",
+        "role": "QA Engineer",
+        "current_tasks": [
+          {
+            "title": "Begin regression testing",
+            "priority": "Medium",
+            "due_date": "2025-04-10",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [
+          {
+            "title": "Completed ingestion test cases"
+          }
+        ],
+        "workload": "Low",
+        "flag": "On Track"
+      }
+    ]
+  }
+}

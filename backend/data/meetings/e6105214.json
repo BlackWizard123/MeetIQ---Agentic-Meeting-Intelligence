@@ -1,0 +1,482 @@
+{
+  "id": "e6105214",
+  "timestamp": "2026-04-06T13:35:17.132740",
+  "memo": {
+    "title": "Plipkary Sprint 1 Kickoff",
+    "date": "2025-04-07",
+    "attendees": [
+      "Hariharan",
+      "Vikram",
+      "Priya",
+      "Arun",
+      "Nithya",
+      "Suresh",
+      "Lakshmi"
+    ],
+    "project": "Plipkary",
+    "summary_points": [
+      "Kickoff for Sprint 1 of the Plipkary project, focusing on core e-commerce flows.",
+      "Team roles and initial tasks were assigned for backend, frontend, infrastructure, and testing.",
+      "Vikram is handling backend APIs, Priya and Nithya are on the frontend, Arun is on payment integration, Suresh is on infrastructure, and Lakshmi is on testing.",
+      "A critical, non-negotiable investor demo is scheduled for April 15th, requiring the end-to-end flow of product listing, cart, and checkout to be functional.",
+      "Dependencies and blockers were identified, and team members were assigned to guide and unblock others.",
+      "A mid-sprint check-in meeting is scheduled for Thursday to review progress."
+    ],
+    "key_decisions": [
+      "Vikram will prioritize the product listing API to unblock Priya.",
+      "Vikram will guide Arun on the Razorpay payment integration.",
+      "Priya will guide Nithya on the frontend payment redirect flow.",
+      "The staging environment must be stable by Friday to allow for weekend testing by Lakshmi.",
+      "The core flow (product listing, cart, checkout) must be ready for the investor demo on April 15th."
+    ],
+    "blockers": [
+      "Priya is blocked on the product listing page pending the product API from Vikram.",
+      "Nithya is blocked on the cart UI pending the cart API from Vikram.",
+      "Suresh is blocked on deployment configuration pending environment variables from Vikram.",
+      "Lakshmi is blocked from starting test execution pending the APIs from Vikram and the staging URL from Suresh."
+    ],
+    "risks": [
+      "Arun's lack of experience with payment APIs could introduce delays or bugs in the payment integration.",
+      "The tight deadline for the April 15th investor demo leaves little room for slippage in any area."
+    ],
+    "dependencies": [
+      "Priya depends on Vikram for the product API.",
+      "Nithya depends on Vikram for the cart API.",
+      "Nithya depends on Priya for guidance on the payment redirect flow.",
+      "Arun depends on Vikram for guidance on payment integration.",
+      "Suresh depends on Vikram for backend environment variables.",
+      "Lakshmi depends on Vikram for the APIs and on Suresh for the staging URL."
+    ],
+    "next_steps": [
+      "Vikram to send environment variables to Suresh by EOD today.",
+      "Vikram to push the product listing API by tomorrow evening.",
+      "Vikram to pair with Arun tomorrow on payment integration.",
+      "Vikram to complete all backend APIs by Wednesday.",
+      "Priya to help Nithya with the payment redirect flow this afternoon.",
+      "Suresh to share the staging URL with Lakshmi today.",
+      "Suresh to ensure the staging environment is stable by Friday.",
+      "Lakshmi to start test execution on Wednesday."
+    ],
+    "manager_actions": [
+      "Schedule a mid-sprint check on Thursday to review progress."
+    ],
+    "open_questions": [],
+    "highlights": [
+      "The database schema for products, orders, and users is already complete.",
+      "The Cloud Run environment and CI/CD pipeline are set up, and the staging environment is live."
+    ],
+    "follow_up_required": true
+  },
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Develop REST APIs for cart management",
+      "description": "Create and deploy the backend REST APIs for adding items to a cart, updating quantities, and viewing the cart. This is a blocker for the frontend cart UI development.",
+      "assignee": "Vikram",
+      "assignee_email": "vikram.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-09",
+      "assigned_date": "2025-04-07",
+      "total_days": 3,
+      "priority": "High",
+      "notes": "Nithya is blocked on this for the cart UI and checkout page. This is part of the core flow for the investor demo.",
+      "escalation_details": "Investor demo on April 15th is non-negotiable. This API is critical for the end-to-end flow.",
+      "skills_required": [
+        "REST APIs",
+        "Node.js"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t2",
+      "title": "Integrate Razorpay payment gateway",
+      "description": "Implement the backend logic for payment gateway integration with Razorpay. This includes initiating payments and handling webhooks for payment confirmation.",
+      "assignee": "Arun",
+      "assignee_email": "arun.plip@dummyteam.com",
+      "companion": "Vikram",
+      "guide": "Vikram",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-11",
+      "assigned_date": "2025-04-07",
+      "total_days": 5,
+      "priority": "High",
+      "notes": "Arun has not worked with payment APIs before. Vikram will guide and pair with him, especially on webhook handling.",
+      "escalation_details": "Investor demo on April 15th is non-negotiable. Checkout flow must be functional.",
+      "skills_required": [
+        "Payment Gateway Integration",
+        "REST APIs",
+        "Node.js",
+        "Webhook Handling"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t3",
+      "title": "Deliver the product listing REST API",
+      "description": "Prioritize and deliver the REST API endpoint for fetching the list of products. This is a critical blocker for the frontend product listing page.",
+      "assignee": "Vikram",
+      "assignee_email": "vikram.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-08",
+      "assigned_date": "2025-04-07",
+      "total_days": 2,
+      "priority": "High",
+      "notes": "Priya is blocked on the frontend product listing page until this API is available.",
+      "escalation_details": "This API is blocking frontend development for the investor demo on April 15th.",
+      "skills_required": [
+        "REST APIs",
+        "Node.js"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t4",
+      "title": "Build Homepage and Product Listing Page UI",
+      "description": "Develop the frontend for the homepage and product listing page using Next.js and Tailwind. The product listing page will consume the API from Vikram.",
+      "assignee": "Priya",
+      "assignee_email": "priya.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-10",
+      "assigned_date": "2025-04-07",
+      "total_days": 4,
+      "priority": "High",
+      "notes": "Depends on the product listing API from Vikram (Task t3).",
+      "escalation_details": "Investor demo on April 15th is non-negotiable. Product listing is a core part of the demo.",
+      "skills_required": [
+        "Next.js",
+        "Tailwind",
+        "React",
+        "TypeScript"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t5",
+      "title": "Build Cart UI and Checkout Page",
+      "description": "Develop the frontend for the shopping cart and the initial checkout page. This includes handling the payment redirect flow.",
+      "assignee": "Nithya",
+      "assignee_email": "nithya.plip@dummyteam.com",
+      "companion": "Priya",
+      "guide": "Priya",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-11",
+      "assigned_date": "2025-04-07",
+      "total_days": 5,
+      "priority": "High",
+      "notes": "Blocked on the cart API from Vikram (Task t1). Nithya is unsure about the payment redirect flow and Priya will guide her.",
+      "escalation_details": "Investor demo on April 15th is non-negotiable. Cart and checkout are critical for the end-to-end flow.",
+      "skills_required": [
+        "React",
+        "CSS",
+        "JavaScript",
+        "Frontend Routing"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t6",
+      "title": "Complete deployment config for staging",
+      "description": "Finalize the Cloud Run deployment configuration for the staging environment. This includes adding the necessary backend environment variables.",
+      "assignee": "Suresh",
+      "assignee_email": "suresh.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-11",
+      "assigned_date": "2025-04-07",
+      "total_days": 5,
+      "priority": "High",
+      "notes": "Blocked on receiving environment variables from Vikram (Task t7). Staging must be stable by Friday for weekend testing.",
+      "escalation_details": "A stable staging environment is required for QA to test the full flow before the investor demo.",
+      "skills_required": [
+        "Cloud Run",
+        "CI/CD",
+        "GCP",
+        "Docker"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t7",
+      "title": "Provide backend environment variables to DevOps",
+      "description": "Compile and send the list of all required environment variables for the backend service to Suresh.",
+      "assignee": "Vikram",
+      "assignee_email": "vikram.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-07",
+      "assigned_date": "2025-04-07",
+      "total_days": 1,
+      "priority": "High",
+      "notes": "This is blocking Suresh from completing the staging deployment configuration (Task t6).",
+      "escalation_details": "If not provided, staging deployment will be delayed, impacting testing timelines for the demo.",
+      "skills_required": [
+        "Node.js",
+        "Backend Configuration"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t8",
+      "title": "Prepare test cases for product and cart flows",
+      "description": "Create a comprehensive set of test cases for the product listing page, cart functionality, and the basic checkout flow.",
+      "assignee": "Lakshmi",
+      "assignee_email": "lakshmi.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-09",
+      "assigned_date": "2025-04-07",
+      "total_days": 3,
+      "priority": "Medium",
+      "notes": "Test execution will begin once APIs are deployed to staging. Needs the staging URL from Suresh (Task t9).",
+      "escalation_details": "Test cases must be ready to ensure full test coverage can be executed before the demo.",
+      "skills_required": [
+        "Testing",
+        "E2E Testing"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t9",
+      "title": "Share staging environment URL",
+      "description": "Share the URL for the newly created staging environment with the entire project team.",
+      "assignee": "Suresh",
+      "assignee_email": "suresh.plip@dummyteam.com",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-07",
+      "assigned_date": "2025-04-07",
+      "total_days": 1,
+      "priority": "Medium",
+      "notes": "Lakshmi needs this URL to prepare for test execution.",
+      "escalation_details": "Delay will prevent QA and frontend developers from accessing the integrated environment.",
+      "skills_required": [
+        "DevOps"
+      ],
+      "skill_match": ""
+    },
+    {
+      "id": "t10",
+      "title": "Schedule mid-sprint review meeting",
+      "description": "Schedule a meeting for Thursday to review sprint progress with all team members.",
+      "assignee": "",
+      "assignee_email": "",
+      "companion": "",
+      "guide": "",
+      "checker": "hariharan-projectmanager",
+      "due_date": "2025-04-08",
+      "assigned_date": "2025-04-07",
+      "total_days": 2,
+      "priority": "Low",
+      "notes": "The meeting is to be held on Thursday, April 10th, to check progress and address blockers before the final push for the demo.",
+      "escalation_details": "If not scheduled, the team might miss a key checkpoint to align on progress for the demo.",
+      "skills_required": [
+        "Project Management"
+      ],
+      "skill_match": ""
+    }
+  ],
+  "meetings": [
+    {
+      "id": "m1",
+      "title": "Payment Gateway Integration Guidance",
+      "purpose": "To guide Arun on Razorpay payment gateway integration and webhook handling.",
+      "suggested_date": "2025-04-08T12:00",
+      "duration_mins": 30,
+      "recipients": [
+        "Arun",
+        "Vikram"
+      ],
+      "agenda": "Review Razorpay documentation; Discuss webhook handling; Pair on initial setup"
+    },
+    {
+      "id": "m2",
+      "title": "Frontend Payment Redirect Flow Guidance",
+      "purpose": "To guide Nithya on handling the payment redirect flow and checkout page on the frontend.",
+      "suggested_date": "2025-04-07T14:00",
+      "duration_mins": 30,
+      "recipients": [
+        "Priya",
+        "Nithya"
+      ],
+      "agenda": "Review payment redirect logic; Discuss state management for checkout; Frontend implementation best practices"
+    }
+  ],
+  "briefing": {
+    "briefing_title": "Plipkary Sprint 1: Pre-Check-in Briefing",
+    "what_was_discussed": [
+      "Kickoff for Sprint 1, focusing on the core e-commerce flow (product listing, cart, checkout) for a critical investor demo on April 15th, 2026.",
+      "Team roles and initial tasks were assigned across backend, frontend, infrastructure, and testing.",
+      "Key dependencies were identified, with most of the team blocked by backend API development.",
+      "A mid-sprint check-in meeting is scheduled for Thursday to review progress and address blockers."
+    ],
+    "what_was_decided": [
+      "Vikram will prioritize the product listing API to unblock the frontend team.",
+      "Vikram will guide Arun on the Razorpay payment integration.",
+      "Priya will guide Nithya on the frontend payment redirect flow.",
+      "The staging environment must be stable by Friday, April 10th, to allow for weekend testing.",
+      "The core end-to-end flow is a non-negotiable deliverable for the April 15th demo."
+    ],
+    "what_to_follow_up": [
+      "Confirm if Vikram has provided the environment variables to Suresh (was due EOD today, April 6th).",
+      "Check if Vikram is on track to deliver the product listing API by tomorrow, April 7th, to unblock Priya.",
+      "Verify that the pairing session between Vikram and Arun for payment integration is scheduled for tomorrow.",
+      "Ensure Priya has connected with Nithya to provide guidance on the payment redirect flow.",
+      "Confirm if Suresh has shared the staging URL with Lakshmi and the team."
+    ],
+    "open_questions": [
+      "Given Vikram is a bottleneck for four team members, is his workload manageable to meet all critical deadlines this week?",
+      "What is the contingency plan if the payment integration is delayed due to Arun's inexperience?",
+      "How can we de-risk the timeline to ensure a stable end-to-end flow is ready for testing by Friday?"
+    ],
+    "risks_to_watch": [
+      "Centralized Dependency: Vikram is a single point of failure. His tasks block Priya, Nithya, Suresh, and Lakshmi. Any slip will cause a cascading delay across the entire project.",
+      "Tight Deadline: The April 15th investor demo leaves no room for error. The compressed timeline requires all dependencies to be resolved on schedule.",
+      "Testing Bottleneck: QA (Lakshmi) is blocked from starting end-to-end testing until all backend, frontend, and infrastructure tasks are complete, leaving a very small window for testing and bug fixing.",
+      "Inexperience Risk: Arun's lack of experience with payment APIs could introduce unforeseen bugs or delays in the critical checkout flow."
+    ],
+    "suggested_agenda": [
+      "Status check on all of Vikram's tasks (Product API, Cart API, Env Vars).",
+      "Confirm Priya, Nithya, and Suresh are unblocked.",
+      "Progress report from Arun on the Razorpay integration.",
+      "Progress report from Priya and Nithya on frontend UI development.",
+      "Confirmation from Suresh on staging environment stability for Friday.",
+      "Review Lakshmi's test plan and confirm readiness for weekend testing.",
+      "Re-evaluate risks and timeline for the April 15th demo."
+    ],
+    "employee_status": [
+      {
+        "name": "Hariharan",
+        "role": "Project Manager",
+        "current_tasks": [
+          {
+            "title": "Schedule mid-sprint review meeting",
+            "priority": "Low",
+            "due_date": "2026-04-08",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "On Track"
+      },
+      {
+        "name": "Vikram",
+        "role": "Backend Lead",
+        "current_tasks": [
+          {
+            "title": "Provide backend environment variables to DevOps",
+            "priority": "High",
+            "due_date": "2026-04-07",
+            "status": "pending"
+          },
+          {
+            "title": "Deliver the product listing REST API",
+            "priority": "High",
+            "due_date": "2026-04-08",
+            "status": "pending"
+          },
+          {
+            "title": "Develop REST APIs for cart management",
+            "priority": "High",
+            "due_date": "2026-04-09",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "High",
+        "flag": "Overloaded"
+      },
+      {
+        "name": "Priya",
+        "role": "Frontend Developer",
+        "current_tasks": [
+          {
+            "title": "Build Homepage and Product Listing Page UI",
+            "priority": "High",
+            "due_date": "2026-04-10",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "Blocked"
+      },
+      {
+        "name": "Arun",
+        "role": "Backend Developer",
+        "current_tasks": [
+          {
+            "title": "Integrate Razorpay payment gateway",
+            "priority": "High",
+            "due_date": "2026-04-11",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Medium",
+        "flag": "On Track"
+      },
+      {
+        "name": "Nithya",
+        "role": "Frontend Developer",
+        "current_tasks": [
+          {
+            "title": "Build Cart UI and Checkout Page",
+            "priority": "High",
+            "due_date": "2026-04-11",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "Blocked"
+      },
+      {
+        "name": "Suresh",
+        "role": "DevOps Engineer",
+        "current_tasks": [
+          {
+            "title": "Share staging environment URL",
+            "priority": "Medium",
+            "due_date": "2026-04-07",
+            "status": "pending"
+          },
+          {
+            "title": "Complete deployment config for staging",
+            "priority": "High",
+            "due_date": "2026-04-11",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Low",
+        "flag": "Blocked"
+      },
+      {
+        "name": "Lakshmi",
+        "role": "QA Engineer",
+        "current_tasks": [
+          {
+            "title": "Prepare test cases for product and cart flows",
+            "priority": "Medium",
+            "due_date": "2026-04-09",
+            "status": "pending"
+          }
+        ],
+        "completed_tasks": [],
+        "workload": "Medium",
+        "flag": "Blocked"
+      }
+    ]
+  }
+}
