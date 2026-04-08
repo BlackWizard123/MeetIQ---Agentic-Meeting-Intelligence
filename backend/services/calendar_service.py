@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 
-TOKEN_FILE    = os.path.join(os.path.dirname(__file__), "../token.json")
 MANAGER_EMAIL = os.getenv("MANAGER_EMAIL", "")
 MANAGER_NAME  = os.getenv("MANAGER_NAME", "hariharan-projectmanager")
 
@@ -14,9 +13,10 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive.file",
 ]
 
+from services.token_loader import load_token
+
 def _creds():
-    with open(TOKEN_FILE) as f:
-        return Credentials.from_authorized_user_info(json.load(f), SCOPES)
+    return Credentials.from_authorized_user_info(load_token(), SCOPES)
 
 def _calendar(): return build("calendar", "v3", credentials=_creds())
 def _tasks():    return build("tasks",    "v1", credentials=_creds())
@@ -41,6 +41,7 @@ def _parse_datetime(date_str: str) -> datetime:
     """
     Parse date or datetime string into a datetime object (IST).
     Accepts: YYYY-MM-DDTHH:MM  or  YYYY-MM-DD
+    If the parsed date is in the past, push it forward to next available day.
     Falls back to 7 days from now at 10:00 AM if invalid/TBD.
     """
     fallback = datetime.now() + timedelta(days=7)
@@ -49,16 +50,27 @@ def _parse_datetime(date_str: str) -> datetime:
     if not date_str or date_str.strip().upper() == "TBD":
         return fallback
     s = date_str.strip()
+
+    dt = None
     # datetime-local format: 2025-04-10T14:30
     try:
-        return datetime.strptime(s, "%Y-%m-%dT%H:%M")
+        dt = datetime.strptime(s, "%Y-%m-%dT%H:%M")
     except ValueError:
         pass
     # date-only format: 2025-04-10
-    try:
-        return datetime.strptime(s, "%Y-%m-%d").replace(hour=10, minute=0)
-    except ValueError:
-        return fallback
+    if dt is None:
+        try:
+            dt = datetime.strptime(s, "%Y-%m-%d").replace(hour=10, minute=0)
+        except ValueError:
+            return fallback
+
+    # If date is in the past, push forward by enough days to make it future
+    now = datetime.now()
+    if dt < now:
+        days_behind = (now - dt).days + 1
+        dt = dt + timedelta(days=days_behind)
+
+    return dt
 
 
 def create_calendar_event(meeting: dict) -> str:

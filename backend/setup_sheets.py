@@ -15,7 +15,7 @@ SCOPES = [
 ]
 
 PROJECTS = [
-    {"key": "RAG",      "name": "Enterprise RAG"},
+    # {"key": "RAG",      "name": "Enterprise RAG"},
     {"key": "PLIPKARY", "name": "Plipkary"},
 ]
 

@@ -30,9 +30,10 @@ C_DONE   = {"red":0.85,"green":0.85,"blue":0.85}
 C_WHITE  = {"red":1.00,"green":1.00,"blue":1.00}
 C_LIGHT  = {"red":0.95,"green":0.97,"blue":0.99}
 
+from services.token_loader import load_token
+
 def _creds():
-    with open(TOKEN_FILE) as f:
-        return Credentials.from_authorized_user_info(json.load(f), SCOPES)
+    return Credentials.from_authorized_user_info(load_token(), SCOPES)
 
 def _sheets(): return build("sheets","v4",credentials=_creds())
 
@@ -298,6 +299,309 @@ def update_task_tracker(project_name, all_tasks, employees):
             body={"requests":requests}).execute()
 
     return f"https://docs.google.com/spreadsheets/d/{sid}"
+
+# -----------------------------------------------------------------
+
+# import os, json
+# from datetime import datetime, date
+# from google.oauth2.credentials import Credentials
+# from googleapiclient.discovery import build
+
+# TOKEN_FILE = os.path.join(os.path.dirname(__file__), "../token.json")
+# SCOPES = [
+#     "https://www.googleapis.com/auth/calendar",
+#     "https://www.googleapis.com/auth/tasks",
+#     "https://www.googleapis.com/auth/spreadsheets",
+#     "https://www.googleapis.com/auth/drive.file",
+# ]
+
+# # Sheet IDs loaded from env — set by setup_sheets.py
+# SHEET_IDS = {
+#     "Enterprise RAG": {
+#         "log":     os.getenv("SHEET_LOG_RAG"),
+#         "tracker": os.getenv("SHEET_TRACKER_RAG"),
+#     },
+#     "Plipkary": {
+#         "log":     os.getenv("SHEET_LOG_PLIPKARY"),
+#         "tracker": os.getenv("SHEET_TRACKER_PLIPKARY"),
+#     },
+# }
+
+# C_HIGH   = {"red":1.00,"green":0.80,"blue":0.80}
+# C_MEDIUM = {"red":1.00,"green":0.95,"blue":0.80}
+# C_LOW    = {"red":0.85,"green":0.95,"blue":0.85}
+# C_DONE   = {"red":0.85,"green":0.85,"blue":0.85}
+# C_WHITE  = {"red":1.00,"green":1.00,"blue":1.00}
+# C_LIGHT  = {"red":0.95,"green":0.97,"blue":0.99}
+
+# def _creds():
+#     with open(TOKEN_FILE) as f:
+#         return Credentials.from_authorized_user_info(json.load(f), SCOPES)
+
+# def _sheets(): return build("sheets","v4",credentials=_creds())
+
+# def _safe_str(val):
+#     if val is None: return ""
+#     if isinstance(val, (date, datetime)): return str(val)[:10]
+#     if isinstance(val, list): return "\n• ".join(str(v) for v in val) if val else ""
+#     return str(val)
+
+# def _priority_color(p):
+#     return {"High":C_HIGH,"Medium":C_MEDIUM,"Low":C_LOW}.get(p, C_WHITE)
+
+# def _get_sheet_id(sheets_svc, spreadsheet_id, tab_name):
+#     meta = sheets_svc.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
+#     for s in meta["sheets"]:
+#         if s["properties"]["title"] == tab_name:
+#             return s["properties"]["sheetId"]
+#     return None
+
+
+# # ── Meeting Log ───────────────────────────────────────────────────────────
+
+# def update_sheet(meeting_id, project_name, memo, tasks, meetings):
+#     """Appends a new meeting row to the static Meeting Log sheet."""
+#     ids = SHEET_IDS.get(project_name)
+#     if not ids or not ids.get("log"):
+#         print(f"[Sheets] No log sheet ID for {project_name}")
+#         return None
+
+#     sid = ids["log"]
+#     svc = _sheets()
+#     now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+
+#     # ── Overview row ──
+#     overview_row = [[
+#         meeting_id, now,
+#         _safe_str(memo.get("title")),
+#         _safe_str(memo.get("date")),
+#         project_name,
+#         ", ".join(memo.get("attendees",[])),
+#         "• " + "\n• ".join(memo.get("summary_points",[])) if memo.get("summary_points") else _safe_str(memo.get("summary","")),
+#         "• " + "\n• ".join(memo.get("key_decisions",[])) if memo.get("key_decisions") else "",
+#         "• " + "\n• ".join(memo.get("blockers",[])) if memo.get("blockers") else "",
+#         "• " + "\n• ".join(memo.get("risks",[])) if memo.get("risks") else "",
+#         "• " + "\n• ".join(memo.get("next_steps",[])) if memo.get("next_steps") else "",
+#         "• " + "\n• ".join(memo.get("manager_actions",[])) if memo.get("manager_actions") else "",
+#         "• " + "\n• ".join(memo.get("open_questions",[])) if memo.get("open_questions") else "",
+#         "• " + "\n• ".join(memo.get("highlights",[])) if memo.get("highlights") else "",
+#         "Yes" if memo.get("follow_up_required") else "No",
+#         str(len(tasks)),
+#         str(len(meetings)),
+#     ]]
+
+#     # ── Task rows ──
+#     task_rows = []
+#     for t in tasks:
+#         task_rows.append([
+#             meeting_id, _safe_str(memo.get("title")),
+#             _safe_str(t.get("id")), _safe_str(t.get("title")),
+#             _safe_str(t.get("description","")),
+#             _safe_str(t.get("assignee","")), _safe_str(t.get("assignee_email","")),
+#             _safe_str(t.get("companion","")), _safe_str(t.get("guide","")),
+#             _safe_str(t.get("checker","Manager")),
+#             _safe_str(t.get("priority","Medium")),
+#             _safe_str(t.get("assigned_date",str(datetime.utcnow().date()))),
+#             _safe_str(t.get("due_date","TBD")),
+#             _safe_str(t.get("total_days","")),
+#             _safe_str(t.get("skill_match","")),
+#             _safe_str(t.get("notes","")),
+#             _safe_str(t.get("escalation_details","")),
+#             "pending",
+#         ])
+
+#     # ── Meeting rows ──
+#     mtg_rows = []
+#     for m in meetings:
+#         agenda = m.get("agenda","")
+#         if isinstance(agenda, list): agenda = "; ".join(agenda)
+#         mtg_rows.append([
+#             meeting_id, _safe_str(memo.get("title")),
+#             _safe_str(m.get("title","")), _safe_str(m.get("purpose","")),
+#             _safe_str(m.get("suggested_date","TBD")),
+#             str(m.get("duration_mins",30)),
+#             ", ".join(m.get("recipients",[])),
+#             agenda,
+#         ])
+
+#     # Append all
+#     batch = {"valueInputOption":"RAW","data":[
+#         {"range":"Overview!A:Q", "values":overview_row},
+#     ]}
+#     if task_rows: batch["data"].append({"range":"Tasks!A:R","values":task_rows})
+#     if mtg_rows:  batch["data"].append({"range":"Meetings!A:H","values":mtg_rows})
+
+#     svc.spreadsheets().values().batchUpdate(
+#         spreadsheetId=sid, body=batch).execute()
+
+#     # Color priority column in Tasks (col K = index 10)
+#     if task_rows:
+#         tasks_sheet_id = _get_sheet_id(svc, sid, "Tasks")
+#         result = svc.spreadsheets().values().get(
+#             spreadsheetId=sid, range="Tasks!A:A").execute()
+#         start = len(result.get("values",[])) - len(task_rows)
+#         requests = []
+#         for i, t in enumerate(tasks):
+#             requests.append({"repeatCell":{
+#                 "range":{"sheetId":tasks_sheet_id,
+#                          "startRowIndex":start+i,"endRowIndex":start+i+1,
+#                          "startColumnIndex":10,"endColumnIndex":11},
+#                 "cell":{"userEnteredFormat":{
+#                     "backgroundColor":_priority_color(t.get("priority","Medium")),
+#                     "textFormat":{"bold":True},
+#                 }},
+#                 "fields":"userEnteredFormat(backgroundColor,textFormat)",
+#             }})
+#         svc.spreadsheets().batchUpdate(spreadsheetId=sid,
+#             body={"requests":requests}).execute()
+
+#     return f"https://docs.google.com/spreadsheets/d/{sid}"
+
+
+# # ── Task Tracker ──────────────────────────────────────────────────────────
+
+# def update_task_tracker(project_name, all_tasks, employees):
+#     """
+#     Updates the static Task Tracker sheet in place.
+#     Each employee has a fixed row — we update their columns directly.
+#     Completed tasks are appended to the Completed Tasks tab.
+#     """
+#     ids = SHEET_IDS.get(project_name)
+#     if not ids or not ids.get("tracker"):
+#         print(f"[Tracker] No tracker sheet ID for {project_name}")
+#         return None
+
+#     sid = ids["tracker"]
+#     svc = _sheets()
+#     now = datetime.utcnow().strftime("%Y-%m-%d %H:%M")
+
+#     # Build per-employee task index
+#     active_by_emp    = {}
+#     completed_by_emp = {}
+#     for t in all_tasks:
+#         name = t.get("assignee_name","")
+#         if not name: continue
+#         if t.get("status") == "done":
+#             completed_by_emp.setdefault(name,[]).append(t)
+#         else:
+#             active_by_emp.setdefault(name,[]).append(t)
+
+#     # Read current tracker to find employee row numbers
+#     result = svc.spreadsheets().values().get(
+#         spreadsheetId=sid, range="Task Tracker!A:A").execute()
+#     existing_rows = [r[0] if r else "" for r in result.get("values",[])]
+
+#     # Build update data for each employee row
+#     update_data = []
+#     requests    = []
+#     tracker_sid = _get_sheet_id(svc, sid, "Task Tracker")
+
+#     for emp in employees:
+#         name = emp.get("name","")
+#         try:
+#             row_idx = existing_rows.index(name)  # 0-based
+#         except ValueError:
+#             continue
+
+#         active    = active_by_emp.get(name,[])
+#         completed = completed_by_emp.get(name,[])
+#         total_active    = len(active)
+#         total_completed = len(completed)
+#         workload_pct    = min(100, total_active * 20)
+
+#         # Fill up to 3 active task slots
+#         def task_cols(tasks, slot):
+#             if slot < len(tasks):
+#                 t = tasks[slot]
+#                 return [
+#                     _safe_str(t.get("title","")),
+#                     _safe_str(t.get("priority","")),
+#                     _safe_str(t.get("due_date","TBD")),
+#                 ]
+#             return ["","",""]
+
+#         row_values = [
+#             name,
+#             emp.get("role",""),
+#             emp.get("band",""),
+#             emp.get("level",""),
+#             *task_cols(active,0),
+#             *task_cols(active,1),
+#             *task_cols(active,2),
+#             str(total_active),
+#             str(total_completed),
+#             f"{workload_pct}%",
+#             now,
+#         ]
+
+#         # Row in sheets is 1-based, +1 for header
+#         sheet_row = row_idx + 1
+#         update_data.append({
+#             "range": f"Task Tracker!A{sheet_row}:Q{sheet_row}",
+#             "values": [row_values],
+#         })
+
+#         # Color workload cell
+#         workload_color = C_HIGH if workload_pct>=80 else C_MEDIUM if workload_pct>=40 else C_LOW
+#         requests.append({"repeatCell":{
+#             "range":{"sheetId":tracker_sid,
+#                      "startRowIndex":row_idx,"endRowIndex":row_idx+1,
+#                      "startColumnIndex":15,"endColumnIndex":16},
+#             "cell":{"userEnteredFormat":{"backgroundColor":workload_color,
+#                     "textFormat":{"bold":True}}},
+#             "fields":"userEnteredFormat(backgroundColor,textFormat)",
+#         }})
+
+#     if update_data:
+#         svc.spreadsheets().values().batchUpdate(
+#             spreadsheetId=sid,
+#             body={"valueInputOption":"RAW","data":update_data}
+#         ).execute()
+
+#     # Append newly completed tasks to Completed Tasks tab
+#     newly_done = [t for t in all_tasks if t.get("status")=="done"]
+#     if newly_done:
+#         # Check existing completed to avoid dupes
+#         existing = svc.spreadsheets().values().get(
+#             spreadsheetId=sid, range="Completed Tasks!A:A").execute()
+#         existing_ids = {r[0] for r in existing.get("values",[])[1:] if r}
+
+#         new_rows = []
+#         for t in newly_done:
+#             tid = str(t.get("id",""))
+#             if tid not in existing_ids:
+#                 new_rows.append([
+#                     t.get("assignee_name",""),
+#                     t.get("role","") if "role" in t else "",
+#                     _safe_str(t.get("title","")),
+#                     _safe_str(t.get("completed_at",now)),
+#                     _safe_str(t.get("meeting_id","")),
+#                     _safe_str(t.get("notes","")),
+#                 ])
+#         if new_rows:
+#             svc.spreadsheets().values().append(
+#                 spreadsheetId=sid, range="Completed Tasks!A:F",
+#                 valueInputOption="RAW", insertDataOption="INSERT_ROWS",
+#                 body={"values":new_rows}
+#             ).execute()
+#             # Grey out completed rows
+#             comp_sid = _get_sheet_id(svc, sid, "Completed Tasks")
+#             existing_count = len(existing.get("values",[])) 
+#             for i in range(len(new_rows)):
+#                 requests.append({"repeatCell":{
+#                     "range":{"sheetId":comp_sid,
+#                              "startRowIndex":existing_count+i,
+#                              "endRowIndex":existing_count+i+1,
+#                              "startColumnIndex":0,"endColumnIndex":6},
+#                     "cell":{"userEnteredFormat":{"backgroundColor":C_DONE}},
+#                     "fields":"userEnteredFormat.backgroundColor",
+#                 }})
+
+#     if requests:
+#         svc.spreadsheets().batchUpdate(spreadsheetId=sid,
+#             body={"requests":requests}).execute()
+
+#     return f"https://docs.google.com/spreadsheets/d/{sid}"
 
 # ----------------------------------------------------------------------
 # import os

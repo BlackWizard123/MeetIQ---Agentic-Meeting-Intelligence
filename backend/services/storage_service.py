@@ -1,17 +1,26 @@
-import json, os, uuid
+import json, uuid, os
 from datetime import datetime, date
 
-DATA_DIR     = os.path.join(os.path.dirname(__file__), "../data")
-MEETINGS_DIR = os.path.join(DATA_DIR, "meetings")
-HISTORY_FILE = os.path.join(DATA_DIR, "history.json")
+from google.cloud import storage as gcs
+from google.oauth2.credentials import Credentials
 
-def _ensure():
-    os.makedirs(MEETINGS_DIR, exist_ok=True)
-    if not os.path.exists(HISTORY_FILE):
-        with open(HISTORY_FILE,"w") as f: json.dump([],f)
+BUCKET_NAME = os.getenv("GCS_BUCKET", "meetiq-data")
+MEETINGS_PREFIX = "meetings/"
+HISTORY_KEY     = "history.json"
+
+_client = None
+
+def _gcs():
+    global _client
+    if _client is None:
+        _client = gcs.Client()
+    return _client
+
+def _bucket():
+    return _gcs().bucket(BUCKET_NAME)
+
 
 class _Encoder(json.JSONEncoder):
-    """Handles date, datetime objects from PostgreSQL."""
     def default(self, obj):
         if isinstance(obj, (date, datetime)):
             return str(obj)[:10]
@@ -20,47 +29,65 @@ class _Encoder(json.JSONEncoder):
 def _dump(data):
     return json.dumps(data, cls=_Encoder, indent=2)
 
+
+def _read(key: str):
+    blob = _bucket().blob(key)
+    if not blob.exists():
+        return None
+    return json.loads(blob.download_as_text())
+
+def _write(key: str, data):
+    blob = _bucket().blob(key)
+    blob.upload_from_string(_dump(data), content_type="application/json")
+
+
 def save_meeting(memo, tasks, meetings, project_name=None):
-    _ensure()
     mid       = str(uuid.uuid4())[:8]
     timestamp = datetime.utcnow().isoformat()
-    record    = {"id":mid,"timestamp":timestamp,
-                 "memo":memo,"tasks":tasks,"meetings":meetings,
-                 "briefing":None}
-    with open(os.path.join(MEETINGS_DIR,f"{mid}.json"),"w") as f:
-        f.write(_dump(record))
+    record    = {
+        "id": mid, "timestamp": timestamp,
+        "memo": memo, "tasks": tasks, "meetings": meetings,
+        "briefing": None,
+    }
+    _write(f"{MEETINGS_PREFIX}{mid}.json", record)
+
     history = load_history()
-    history.append({"id":mid,"title":memo.get("title","Untitled"),
-                    "date":memo.get("date",timestamp[:10]),
-                    "attendees":memo.get("attendees",[]),
-                    "project": project_name or memo.get("project") or "Unknown Project",
-                    "timestamp":timestamp})
-    with open(HISTORY_FILE,"w") as f:
-        f.write(_dump(history))
+    history.append({
+        "id":        mid,
+        "title":     memo.get("title", "Untitled"),
+        "date":      memo.get("date", timestamp[:10]),
+        "attendees": memo.get("attendees", []),
+        "project":   project_name or memo.get("project") or "Unknown Project",
+        "timestamp": timestamp,
+    })
+    _write(HISTORY_KEY, history)
     return mid
 
+
 def load_history():
-    _ensure()
-    with open(HISTORY_FILE) as f: return json.load(f)
+    data = _read(HISTORY_KEY)
+    return data if data is not None else []
+
 
 def load_meeting(mid):
-    _ensure()
-    fp = os.path.join(MEETINGS_DIR,f"{mid}.json")
-    if not os.path.exists(fp): raise FileNotFoundError(f"Meeting {mid} not found")
-    with open(fp) as f: return json.load(f)
+    data = _read(f"{MEETINGS_PREFIX}{mid}.json")
+    if data is None:
+        raise FileNotFoundError(f"Meeting {mid} not found")
+    return data
+
 
 def save_briefing(mid, briefing):
-    _ensure()
-    fp = os.path.join(MEETINGS_DIR,f"{mid}.json")
-    if not os.path.exists(fp): return
-    with open(fp) as f: record = json.load(f)
-    record["briefing"] = briefing
-    with open(fp,"w") as f: f.write(_dump(record))
+    data = _read(f"{MEETINGS_PREFIX}{mid}.json")
+    if data is None: return
+    data["briefing"] = briefing
+    _write(f"{MEETINGS_PREFIX}{mid}.json", data)
+
 
 def load_briefing(mid):
     try:
         return load_meeting(mid).get("briefing")
-    except: return None
+    except:
+        return None
 
 # ---------------------------------------------------
 
