@@ -1,7 +1,9 @@
 
 <img width="3464" height="1074" alt="Picsart_26-04-08_17-08-13-016" src="https://github.com/user-attachments/assets/e4d69e92-997b-497b-a97c-bfe52801df95" />
 
-# MeetIQ — Meeting Intelligence Platform
+# H2S x Google GenAIAPAC Cohort 1 Hackathon
+
+# 🗓️ MeetIQ — Meeting Intelligence Platform
 ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi)
 ![GCP](https://img.shields.io/badge/Google%20Cloud-GCP-blue?logo=googlecloud)
@@ -13,7 +15,7 @@
 
 > A multi-agent AI system that transforms meeting transcripts into structured memos, smart task assignments, scheduled calendar events, and living project dashboards — built on Google Cloud Platform.
 
-### ➡️➡️➡️ Demo video link :
+### ➡️➡️➡️ Demo video link :  https://www.youtube.com/watch?v=jdCALd0zPkI
 ---
 
 ## What is MeetIQ?
@@ -32,6 +34,9 @@ MeetIQ is an AI-powered meeting intelligence platform designed for project manag
 ---
 
 ## Architecture
+
+<img width="1031" height="822" alt="meetiq-arch" src="https://github.com/user-attachments/assets/7569f6e2-a288-4028-98f0-ea7acfe99587" />
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
