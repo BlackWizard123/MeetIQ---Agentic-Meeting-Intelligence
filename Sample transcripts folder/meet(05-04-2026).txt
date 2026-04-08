@@ -1,0 +1,9 @@
+Meeting: Sprint 12 Status
+Date: 2025-04-05
+Attendees: Alice, John, Priya
+
+Alice: The auth module is blocked. John needs to fix the API by Friday.
+John: I'll get on it. Should be done by April 7.
+Priya: Designs are ready but waiting on the API.
+Alice: Let's schedule a review meeting next Monday with John and Priya.
+Decision: Release pushed to April 10.

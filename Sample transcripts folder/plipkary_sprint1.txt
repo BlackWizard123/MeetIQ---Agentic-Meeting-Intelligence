@@ -1,0 +1,63 @@
+Meeting: Plipkary Sprint 1 Kickoff
+Date: 2025-04-07
+Attendees: hariharan-projectmanager, Vikram, Priya, Arun, Nithya, Suresh, Lakshmi
+
+hariharan-projectmanager: Good morning everyone. Let's kick off Sprint 1 for Plipkary. We need to get the core e-commerce flows ready. Vikram, start with the backend.
+
+Vikram: The database schema for products, orders and users is done. I've started the REST APIs for product listing and cart management. Should be ready by Wednesday.
+
+hariharan-projectmanager: Good. Arun, what are you picking up?
+
+Arun: I'll be working on the payment gateway integration with Razorpay. I haven't done payment APIs before so I might need some help.
+
+hariharan-projectmanager: Vikram, please guide Arun on the payment integration. Make sure the webhook handling is done properly.
+
+Vikram: Sure, I'll pair with him tomorrow.
+
+hariharan-projectmanager: Priya, frontend status?
+
+Priya: I've set up the Next.js project with Tailwind. The homepage and product listing page are in progress. I need the product API from Vikram to complete the listing page.
+
+hariharan-projectmanager: Vikram, prioritize the product listing API so Priya is not blocked.
+
+Vikram: I'll push that by tomorrow evening.
+
+hariharan-projectmanager: Nithya, what about you?
+
+Nithya: I'm building the cart UI and the checkout page. I'm blocked on the cart API from Vikram. Also I'm not sure how to handle the payment redirect flow on the frontend.
+
+hariharan-projectmanager: Priya, can you guide Nithya on the payment redirect and frontend flow? She should not be stuck on that.
+
+Priya: Yes I'll help her. We can sit together this afternoon.
+
+hariharan-projectmanager: Suresh, infrastructure?
+
+Suresh: I've set up the Cloud Run environment and CI/CD pipeline with GitHub Actions. The staging environment is live. I need Vikram to give me the environment variables for the backend so I can complete the deployment config.
+
+hariharan-projectmanager: Vikram, send the env config to Suresh by today EOD.
+
+Vikram: Will do.
+
+hariharan-projectmanager: Lakshmi, testing plan?
+
+Lakshmi: I'm preparing the test cases for the product listing and cart flows. I'll start execution once Vikram's APIs are ready by Wednesday. I also need the staging URL from Suresh.
+
+Suresh: I'll share the staging URL today itself.
+
+hariharan-projectmanager: Good. One important thing — we have an investor demo on April 15th. The product listing, cart and basic checkout must work end to end by then. That is non negotiable.
+
+Vikram: Understood. APIs will be done by Wednesday.
+
+Priya: Frontend will match by Thursday.
+
+hariharan-projectmanager: Suresh, make sure staging is stable by Friday so Lakshmi has the full weekend for testing.
+
+Suresh: Confirmed.
+
+hariharan-projectmanager: I will schedule a mid-sprint check on Thursday to review progress. If anyone is blocked before that, ping me directly. Arun and Nithya, don't hesitate to reach out to your guides. Let's make this demo count.
+
+Arun: Understood.
+
+Nithya: Thank you.
+
+hariharan-projectmanager: Alright, meeting closed.

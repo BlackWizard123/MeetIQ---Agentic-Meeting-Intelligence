@@ -1,0 +1,57 @@
+Meeting: Enterprise RAG Sprint 4 Status Update
+Date: 2025-04-06
+Attendees: hariharan-projectmanager, Arjun, Sneha, Karthik, Divya, Rahul, Meena
+
+hariharan-projectmanager: Good morning everyone. Let's get started with the Sprint 3 status. Arjun, take us through the backend.
+
+Arjun: Sure. The FastAPI endpoints for document ingestion are done and deployed. However the vector embedding pipeline is still not optimized. We're seeing latency around 4 seconds per query which is way above our 1 second target.
+
+hariharan-projectmanager: That's a blocker. Sneha, this is your area. What's the plan?
+
+Sneha: I've been testing with different chunking strategies. The issue is our chunk size is too large. I need 3 more days to implement and test a sliding window approach. I also need Karthik to expose a new API endpoint for batch document upload so I can test at scale.
+
+hariharan-projectmanager: Karthik, can you do that?
+
+Karthik: Yes I can build the batch upload endpoint. I'll have it ready by Tuesday. But I'm not fully sure about the authentication part — I haven't worked with OAuth2 before.
+
+hariharan-projectmanager: Arjun, I need you to guide Karthik on the authentication piece. He shouldn't be blocked on that.
+
+Arjun: No problem. I'll sit with him tomorrow morning and get it sorted.
+
+hariharan-projectmanager: Good. Divya, frontend status?
+
+Divya: The document upload UI is complete. The search interface is 70 percent done. I'm blocked on the API response format — once Sneha finalizes the query response structure I can complete the UI in 2 days.
+
+hariharan-projectmanager: Sneha, share the response schema with Divya by end of day today.
+
+Sneha: Will do.
+
+hariharan-projectmanager: Rahul, what are you working on?
+
+Rahul: I'm doing the loading states and error handling on the frontend. It's mostly done. I was also trying to add some animations but I got confused with the TypeScript types. Divya helped me a bit yesterday.
+
+hariharan-projectmanager: Good that Divya is supporting. Meena, testing status?
+
+Meena: I've completed test cases for the document ingestion flow. I found 3 bugs — one critical and two medium. Arjun has already fixed the critical one. The two medium ones are still open and assigned to Karthik.
+
+Karthik: Yes I'll fix those by Wednesday.
+
+hariharan-projectmanager: Good. Now let me highlight something important. We have a client demo on April 14th. That's 8 days from now. The embedding latency issue is the biggest risk. If Sneha cannot fix it in 3 days we need a fallback plan.
+
+Sneha: I'm confident. If the sliding window doesn't work I'll switch to a smaller model for embeddings. That will definitely bring latency down.
+
+hariharan-projectmanager: Okay. I will schedule a mid-week check-in on Wednesday to review progress. I'll also send a status update email to the client today. Arjun, please send me the performance benchmark report by tonight so I can include numbers.
+
+Arjun: Sure, I'll send it by 8pm.
+
+hariharan-projectmanager: One more thing — Rahul, since you're handling TypeScript and you're finding it difficult, Divya will be your guide going forward for any TypeScript related questions. Don't struggle alone.
+
+Rahul: Understood, thank you.
+
+hariharan-projectmanager: Alright. To summarize — Sneha fixes embedding latency by Thursday, Karthik builds batch endpoint by Tuesday and fixes 2 bugs by Wednesday, Arjun sends benchmark report tonight and guides Karthik on auth, Divya shares API schema today and completes search UI in 2 days, Rahul finishes error handling by Tuesday, Meena starts regression testing from Thursday. I will schedule the Wednesday check-in. Any questions?
+
+Arjun: No, all clear.
+
+Sneha: Clear.
+
+hariharan-projectmanager: Good. Meeting adjourned.

@@ -1,0 +1,47 @@
+Meeting: Plipkary Mid-Sprint Check
+Date: 2026-04-08
+Attendees: hariharan-projectmanager, Vikram, Priya, Arun, Nithya, Suresh, Lakshmi
+
+hariharan-projectmanager: Good morning. Quick mid-sprint check. Vikram, API status?
+
+Vikram: Product listing and cart APIs are done and deployed to staging. Payment API is 80 percent complete.
+
+hariharan-projectmanager: Good. Arun, payment integration progress?
+
+Arun: The Razorpay setup is done. Webhook handling is pending. Vikram helped me yesterday, should finish by tomorrow.
+
+hariharan-projectmanager: Vikram, make sure Arun completes webhook by Thursday.
+
+Vikram: I'll review his code today evening.
+
+hariharan-projectmanager: Priya, frontend?
+
+Priya: Product listing page is live on staging. Cart page is 60 percent done. Blocked on cart API response format, Vikram just fixed it so I can resume now.
+
+hariharan-projectmanager: Good. Complete cart page by Thursday. Nithya?
+
+Nithya: Checkout page UI is done. Payment redirect flow has a bug, the success page is not loading after payment. Priya is helping me debug.
+
+hariharan-projectmanager: Fix that by tomorrow. It is critical for the demo.
+
+Nithya: Will do.
+
+hariharan-projectmanager: Suresh, staging status?
+
+Suresh: Staging is stable. CI/CD pipeline is working. I need Vikram to send updated environment variables for the payment gateway.
+
+Vikram: I'll send them in 30 minutes.
+
+hariharan-projectmanager: Lakshmi, testing?
+
+Lakshmi: I have completed 40 test cases for product listing. Found 2 bugs, both assigned to Vikram. Cart testing starts today.
+
+Vikram: I'll fix those 2 bugs by tonight.
+
+hariharan-projectmanager: Good. Investor demo is April 15th. Everyone must be done by April 12th so we have 3 days for final testing. I will schedule a final review meeting on April 13th. Any blockers?
+
+Arun: No blockers now.
+
+Priya: All clear.
+
+hariharan-projectmanager: Good. Let's close. Everyone ping me if blocked.

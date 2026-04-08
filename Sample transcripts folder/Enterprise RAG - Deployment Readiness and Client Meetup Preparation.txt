@@ -1,0 +1,91 @@
+Meeting: Enterprise RAG — Deployment Readiness and Client Meetup Preparation
+Date: 2026-04-08
+Attendees: hariharan-projectmanager, Arjun, Sneha, Karthik, Divya, Rahul, Meena
+
+hariharan-projectmanager: Good morning everyone. Today we have two critical topics — our production deployment readiness and the upcoming client meetup on April 15th. Let's get straight into it. Arjun, give me the deployment status.
+
+Arjun: The backend is production ready. All FastAPI endpoints are stable, the vector embedding pipeline is optimized and we are consistently hitting under 800 milliseconds query latency. I have completed the Docker containerization and the Cloud Run configuration is ready. One thing pending is the environment variables need to be moved to Secret Manager before we deploy.
+
+hariharan-projectmanager: Good. How long will the Secret Manager migration take?
+
+Arjun: Two hours maximum. I can finish it today by noon.
+
+hariharan-projectmanager: Do it. That is blocking deployment. Sneha, embedding pipeline status?
+
+Sneha: The sliding window chunking is working well. Average latency is now 750 milliseconds which is well within our 1 second target. I ran stress tests with 500 concurrent queries yesterday and the system held up. One concern I have is our Pinecone index size. With the client's full document corpus it will grow significantly and we need to discuss whether we upgrade the Pinecone plan before the demo.
+
+hariharan-projectmanager: What is the current index size versus what the client will bring?
+
+Sneha: We are at 2 million vectors. The client's corpus will push us to approximately 8 million. The starter plan caps at 5 million. We need the standard plan.
+
+hariharan-projectmanager: I will handle the Pinecone plan upgrade today. Sneha, prepare a document estimating vector growth for the next 6 months so I can share it with the client during the meetup.
+
+Sneha: I will have it ready by tomorrow morning.
+
+hariharan-projectmanager: Karthik, batch upload API status?
+
+Karthik: The batch upload endpoint is complete and tested. I fixed the two medium priority bugs Meena flagged. Authentication using OAuth2 is working correctly thanks to Arjun's guidance. I am currently working on rate limiting for the batch endpoint so large uploads do not overwhelm the system.
+
+hariharan-projectmanager: Good progress. When will rate limiting be done?
+
+Karthik: By end of day tomorrow.
+
+hariharan-projectmanager: Divya, frontend status for the client demo?
+
+Divya: The search interface is complete. The document upload UI is polished and working end to end. I have added loading states, error handling, and a results confidence score display that shows users how relevant each retrieved document is. Rahul finished the animations and the UI looks very clean. I think it is demo ready.
+
+hariharan-projectmanager: Excellent. I want you and Rahul to prepare a demo flow document — the exact steps we will walk the client through on April 15th. Include sample queries that showcase the RAG capabilities well.
+
+Divya: We will prepare it by April 10th.
+
+hariharan-projectmanager: Rahul, any outstanding frontend issues?
+
+Rahul: No blockers. All animations and loading states are done. I did find a minor CSS issue on mobile view but since the client demo will be on desktop it is not urgent. I will fix it after the meetup.
+
+hariharan-projectmanager: Fine. Meena, testing status?
+
+Meena: I have completed regression testing for all core flows — document upload, search, and retrieval. All critical and high priority bugs are resolved. I have 3 medium priority bugs remaining, none of them are demo blocking. I am starting end to end performance testing today to validate the system under client-like load.
+
+hariharan-projectmanager: I need a full test report by April 12th so I can review before the client meetup. Can you do that?
+
+Meena: Yes absolutely. I will have the report ready by April 12th evening.
+
+hariharan-projectmanager: Good. Now let me talk about the client meetup itself. April 15th at 2pm at the client's office. The agenda will be — product demo, performance benchmarks, security overview, and a discussion on their onboarding timeline. Arjun, I need you to prepare the security and infrastructure overview document. Cover our Cloud Run setup, data encryption, and access controls.
+
+Arjun: I will prepare it by April 11th.
+
+hariharan-projectmanager: Sneha, apart from the vector growth estimate, I also need you to present the embedding pipeline architecture during the meetup. Keep it non-technical enough for a business audience.
+
+Sneha: Understood. I will prepare a simplified architecture slide by April 11th.
+
+hariharan-projectmanager: Regarding deployment — I want us deployed to production by April 13th. That gives us April 14th as a buffer day to catch any production issues before the client sees it. Arjun, you will lead the production deployment. Suresh from the infra team will support you but you own it.
+
+Arjun: Understood. I will coordinate with Suresh and have a deployment runbook ready by April 10th.
+
+hariharan-projectmanager: One more thing — I want a dry run of the full client demo on April 13th after deployment. All of you should attend. Divya leads the demo, I will play the role of the client and ask hard questions.
+
+Divya: That works. I will set up the meeting invite.
+
+hariharan-projectmanager: Any blockers or risks I should know about?
+
+Sneha: The only risk is if the Pinecone upgrade takes more than a day to provision. I recommend we initiate it today.
+
+hariharan-projectmanager: Noted. I will do it right after this meeting. Anything else?
+
+Arjun: We should also do a final security scan before deployment. I can run OWASP ZAP on the APIs today.
+
+hariharan-projectmanager: Good call. Do it. Anything from Karthik, Rahul, Meena?
+
+Karthik: All clear from my side.
+
+Rahul: Nothing from me.
+
+Meena: All clear.
+
+hariharan-projectmanager: Perfect. To summarize — Arjun completes Secret Manager migration by noon today, runs security scan today, prepares infrastructure doc by April 11th and deployment runbook by April 10th. Sneha delivers vector growth estimate by tomorrow and architecture slides by April 11th. Karthik finishes rate limiting by tomorrow. Divya and Rahul deliver demo flow document by April 10th. Meena delivers test report by April 12th. Production deployment on April 13th, dry run same day, client meetup April 15th. I will upgrade Pinecone today. Any questions?
+
+Arjun: All clear.
+
+Divya: Clear.
+
+hariharan-projectmanager: Let us make this client meetup count. Meeting closed.
