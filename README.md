@@ -15,7 +15,8 @@
 
 > A multi-agent AI system that transforms meeting transcripts into structured memos, smart task assignments, scheduled calendar events, and living project dashboards — built on Google Cloud Platform.
 
-### ➡️➡️➡️ Demo video link :  https://www.youtube.com/watch?v=jdCALd0zPkI
+### ➡️ Demo video link :  https://www.youtube.com/watch?v=jdCALd0zPkI
+### ➡️ Medium Article : https://hariharanc0912.medium.com/the-real-work-shouldnt-start-when-the-meeting-ends-how-we-automated-post-meeting-chaos-with-ai-a8b8f37177df
 ---
 
 ## What is MeetIQ?
