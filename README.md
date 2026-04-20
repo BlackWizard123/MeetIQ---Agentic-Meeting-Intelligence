@@ -1,5 +1,5 @@
 
-<img width="3464" height="1074" alt="Picsart_26-04-08_17-08-13-016" src="https://github.com/user-attachments/assets/e4d69e92-997b-497b-a97c-bfe52801df95" />
+<img width="3464" height="740" alt="Picsart_26-04-08_17-08-13-016" src="https://github.com/user-attachments/assets/e4d69e92-997b-497b-a97c-bfe52801df95" />
 
 # H2S x Google GenAIAPAC Cohort 1 Hackathon
 
