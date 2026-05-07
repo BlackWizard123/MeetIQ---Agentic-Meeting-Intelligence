@@ -13,11 +13,15 @@
 ![Gemini](https://img.shields.io/badge/Vertex%20AI-Gemini-purple?logo=google)
 ![Docker](https://img.shields.io/badge/Docker-Container-2496ED?logo=docker)
 
+> [!CAUTION]
+> **Important:** Postgres Cloud DB has been stopped due to billing.
+
 > A multi-agent AI system that transforms meeting transcripts into structured memos, smart task assignments, scheduled calendar events, and living project dashboards — built on Google Cloud Platform.
 
-### 🌐 Cloud Run URL :  https://meetiq-bmfbzin7kq-uc.a.run.app/
-### ➡️ Demo video link :  https://www.youtube.com/watch?v=jdCALd0zPkI
-### ➡️ Medium Article : https://hariharanc0912.medium.com/the-real-work-shouldnt-start-when-the-meeting-ends-how-we-automated-post-meeting-chaos-with-ai-a8b8f37177df
+#### 🌐 Cloud Run URL :  https://meetiq-bmfbzin7kq-uc.a.run.app/
+#### ➡️ Demo video link :  https://www.youtube.com/watch?v=jdCALd0zPkI
+#### ➡️ Medium Article : https://hariharanc0912.medium.com/the-real-work-shouldnt-start-when-the-meeting-ends-how-we-automated-post-meeting-chaos-with-ai-a8b8f37177df
+
 ---
 
 ## What is MeetIQ?
